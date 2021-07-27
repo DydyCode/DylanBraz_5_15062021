@@ -1,39 +1,98 @@
+/***** Les constantes *****/
+const containerTeddies = document.getElementById("teddiesGeneralContainer");
+const quantityInCart = document.getElementById("NumberArticles");
 
-const containerTeddies = document.getElementById("teddiesGeneralContainer")
-// console.log(containerTeddies);
+/***** Les variables *****/
 
-const fetchTeddies = async () => {
-	await fetch("http://localhost:3000/api/teddies")
-	.then((res) => res.json())
-	.then ((data) => (teddies = data));
+// /***** Récupération de la taille du tableau de cart dans le local storage *****/
+// let getQuantityInCart = JSON.parse(localStorage.getItem("cart"));
 
-	console.log(teddies);
+// /***** Affichage du nombre de produit dans le panier *****/
+// quantityInCart.innerText = getQuantityInCart.length;
 
+/***** Le fetch *****/
+fetch('http://localhost:3000/api/teddies') 
+.then (function(res) {
+	if (res) {
+		return res.json();
+	}
+})
+.then (function (arrayAllProducts) {
+
+	/* Appel de la fonction qui crée une div produit */
+	insertNewProduct(arrayAllProducts);
+
+})
+
+/***** catch qui permet de stocker les érreurs et les affichez dans la console *****/
+.catch (function(err) {
+	console.log(err);
+})
+
+/***** Fonction qui "monte" la div *****/
+
+function insertNewProduct(array) {
+	array.forEach((teddies) => {
+		/* Création de la div Produit */
+		const newDivProduct = document.createElement("div");
+		newDivProduct.classList.add("containerProduct");
+
+		/* Ajout du lien */
+		const link = addLinkToProduct(teddies);
+
+		/* Ajout de l'image */
+		const figure = addImageToProduct(teddies);
+
+		/* Ajout de la description */
+		const description = addDescriptionToProduct(teddies);
+
+		/* Montage de la div Produit */
+		link.appendChild(figure);
+		link.appendChild(description);
+		newDivProduct.appendChild(link);
+
+		/* Ajout du produit dans le DOM */
+		document.getElementById('homepage').appendChild(newDivProduct);
+	})
+};
+/***** Fonction qui ajoute une balise a *****/
+
+function addLinkToProduct(teddies) {
+	const link = document.createElement("a");
+	link.setAttribute("href", "product.html?id="+teddies._id);
+
+	return link;
 }
 
-const DisplayTeddies = async () => {
-	await fetchTeddies();
+/***** Fonction qui ajoute l'image *****/
+function addImageToProduct(teddies) {
+	const imageFigureProduct = document.createElement("figure");
+	const image = document.createElement("img");
+	image.setAttribute("src", teddies.imageUrl);
+	imageFigureProduct.appendChild(image);
 
-	containerTeddies.innerHTML = teddies.map(
-		(teddy) => 
-		`
-		<div class="productContainer">
-			<a href="product.html?id=${teddy._id}">
-				<img src="${teddy.imageUrl}">
-					<h3>
-						${teddy.name}
-					</h3>
-						<p>
-							${(teddy.price /100).toFixed(2)}€
-						</p>
-			</a>
-		</div>
-		`
-	)
-	.join("");
-};
-DisplayTeddies();
+	return imageFigureProduct;
+}
 
+/****** Fonction qui ajoute la description *****/
 
+function addDescriptionToProduct(teddies) {
+	const divDescription = document.createElement("div");
+	divDescription.classList.add("description__text");
 
+	const nameTeddies = document.createElement("p");
+	const priceTeddies = document.createElement("p");
+
+	/* Récupére le nom et le prix sur l'API */
+	nameTeddies.innerText = teddies.name;
+	priceTeddies.innerText = (teddies.price/ 100).toFixed(2) + "€";
+
+	/* Ajout du nom et du prix à la div */
+	divDescription.appendChild(nameTeddies);
+	divDescription.appendChild(priceTeddies);
+
+	return divDescription;
+}
+
+/***** Affichage du nombre de produits dans le panier *****/
 
