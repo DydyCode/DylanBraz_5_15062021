@@ -72,6 +72,10 @@ li a {
     width: 500px;
     border-radius: 10px;
 }
+.description__text {
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom : 1rem;}
 
 /***** Footer Index *****/
 footer {
@@ -114,7 +118,7 @@ footer ul {
 .product h2 {
     padding-bottom: 1rem;
 }
-.description__text {
+.descriptionProduct {
     text-align: center;
     padding-top: 1rem;
     padding-bottom : 1rem;
@@ -134,4 +138,30 @@ footer ul {
 .containerProductCart p {
     font-size: 22px;
 }
-
+#clearCartBtn {
+    padding: 10px;
+    display: block;
+    margin: auto;
+    border-radius: 20px;
+    font-size: 17px;
+    margin-bottom: 2rem;
+    background: #8f5bfe;
+    border: none;
+    color: white;
+}
+#clearCartBtn:hover {
+    box-shadow: -1px -1px 8px rgba(168, 167, 167, 0.8);
+    cursor: pointer;
+}
+#containerCartEmpty {
+    text-align: center;
+    padding-top: 5rem;
+}
+#hidden {
+    visibility: hidden;
+    color: red;
+}
+#validate {
+    visibility: hidden;
+    color: green;
+}

@@ -4,11 +4,16 @@ const quantityInCart = document.getElementById("NumberArticles");
 
 /***** Les variables *****/
 
-// /***** Récupération de la taille du tableau de cart dans le local storage *****/
-// let getQuantityInCart = JSON.parse(localStorage.getItem("cart"));
 
-// /***** Affichage du nombre de produit dans le panier *****/
-// quantityInCart.innerText = getQuantityInCart.length;
+/* Fonction qui renvois ce qui se trouve dans le localStorage "cart" */
+
+function whatIsInTheCart() {
+	let inTheCart = JSON.parse(localStorage.getItem("cart"));
+
+	return inTheCart;
+}
+
+
 
 /***** Le fetch *****/
 fetch('http://localhost:3000/api/teddies') 

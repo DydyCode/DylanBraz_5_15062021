@@ -1,13 +1,29 @@
 /***** Les constantes *****/
-// const container = document.getElementById("containerCart");
-
+const container = document.getElementById("containerCart");
+console.log(container);
+const clearCartBtn = document.getElementById("clearCartBtn");
 /***** Les variables *****/
+
+/* Récupération des produits dans le local storage */
 let productsInCart = JSON.parse(localStorage.getItem("cart"));
 
-/***** Boucle qui ajoute les produits du localStorage dans le DOM *****/
-for (var i = 0; i < productsInCart.length; i++){
-   createDiv(productsInCart);
+/* Stockage du nombre de produit du localStorage dans un variable */
+if (productsInCart === null ) {
+    container.innerHTML =   `
+    <div id="containerCartEmpty">
+        <h2>
+            Votre panier est vide.
+        </h2>
+    </div>
+    `
+    clearCartBtn.style = "display: none"
+}else {
+    for (var i = 0; i < productsInCart.length; i++){
+        createDiv(productsInCart);
+    }
 };
+
+
 
 /***** Fonction qui crée la div de produit *****/
 
@@ -75,3 +91,16 @@ function createColorSelected(productsInCart) {
 
     return colorSelected;
 }
+
+
+/*****  Boutton qui vide le panier *****/
+clearCartBtn.addEventListener("click",() => {
+    localStorage.clear();
+    // alert("Le panier a été vidé ");
+    window.location.href = "cart.html";
+});
+
+
+
+
+
