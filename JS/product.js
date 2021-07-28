@@ -11,6 +11,9 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
     })
     .then(function (product) {
 
+        /* Fonction qui affiche le nombre d'article dans le panier */
+        displayQuantityInCart();
+
         localStorage.setItem('currentProduct', JSON.stringify(product));
         console.log(product);
 
@@ -32,7 +35,7 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                 </select action="cart.html">
                 </form>
                     <p id="hidden">
-                    Veuillez choisir une couleur
+                    
                     </p>
                     <button id="addToCartButton">
                         Ajouter au panier
@@ -86,11 +89,19 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
 
         btnAddToCart.addEventListener("click", () => {
             if (document.getElementById('colorsChoices').value === choice) {
-                compulsorychoiceVisible();
+                // compulsorychoiceVisible();
+                const compulsorychoice = document.getElementById("hidden");
+                compulsorychoice.classList.add("textRed");
+                compulsorychoice.innerText = "Veuillez choisir une couleur"
+                compulsorychoice.style = "visibility : visible"
             }else {
+                const compulsorychoice = document.getElementById("hidden");
+                compulsorychoice.classList.add("textGreen");
+                compulsorychoice.innerText = "Article ajoué au panier"
+                compulsorychoice.style = "visibility : visible";
                 saveProductInCart(JSON.parse(localStorage.getItem('currentProduct')));
                 addQuantityInCart();
-                compulsorychoiceHidden();
+                // compulsorychoiceHidden();
             }
         });
     });
@@ -114,13 +125,12 @@ function addOptionToSelect(opt) {
     return newOption
 }
 
-function compulsorychoiceVisible() {
-    const compulsorychoice = document.getElementById("hidden");
-    compulsorychoice.style = "visibility : visible"
-
-}
-
-function compulsorychoiceHidden() {
-    const compulsorychoice = document.getElementById("hidden");
-    compulsorychoice.style = "visibility : hidden";
-}
+/***** Fonction qui affiche le nombre d'article dans le panier ******/
+function displayQuantityInCart() {
+    let quantity = JSON.parse(localStorage.getItem('cart'));
+	if (quantity === null) {
+		NumberArticles.innerText = 0;
+	}else {
+		NumberArticles.innerText = quantity.length;
+	}
+};

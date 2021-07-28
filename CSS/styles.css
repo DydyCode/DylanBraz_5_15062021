@@ -145,11 +145,11 @@ footer ul {
     border-radius: 20px;
     font-size: 17px;
     margin-bottom: 2rem;
-    background: #8f5bfe;
+    background: rgb(250, 77, 77);
     border: none;
     color: white;
 }
-#clearCartBtn:hover {
+#clearCartBtn:hover, .deleteBtn:hover, .validateOrderBtn:hover {
     box-shadow: -1px -1px 8px rgba(168, 167, 167, 0.8);
     cursor: pointer;
 }
@@ -159,9 +159,42 @@ footer ul {
 }
 #hidden {
     visibility: hidden;
+}
+.textRed {
     color: red;
+}
+.textGreen {
+    color: green;
 }
 #validate {
     visibility: hidden;
-    color: green;
+}
+.deleteBtn {
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background: rgb(250, 77, 77);
+    color: white;
+}
+/* Formulaire */
+#containerForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#containerForm input, #containerForm button {
+    width: 300px;
+    display: block;
+    margin: auto;
+    margin-top : 1rem;
+    padding: 5px;
+    font-size: 16px;
+}
+.validateOrderBtn {
+    background: #8f5bfe;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    padding: 15px!important;
+    color: white;
 }

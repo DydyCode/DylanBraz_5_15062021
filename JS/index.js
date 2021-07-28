@@ -1,20 +1,8 @@
 /***** Les constantes *****/
 const containerTeddies = document.getElementById("teddiesGeneralContainer");
-const quantityInCart = document.getElementById("NumberArticles");
+const NumberArticles = document.getElementById("NumberArticles");
 
-/***** Les variables *****/
-
-
-/* Fonction qui renvois ce qui se trouve dans le localStorage "cart" */
-
-function whatIsInTheCart() {
-	let inTheCart = JSON.parse(localStorage.getItem("cart"));
-
-	return inTheCart;
-}
-
-
-
+ 
 /***** Le fetch *****/
 fetch('http://localhost:3000/api/teddies') 
 .then (function(res) {
@@ -23,6 +11,8 @@ fetch('http://localhost:3000/api/teddies')
 	}
 })
 .then (function (arrayAllProducts) {
+
+	displayQuantityInCart();
 
 	/* Appel de la fonction qui crée une div produit */
 	insertNewProduct(arrayAllProducts);
@@ -100,3 +90,11 @@ function addDescriptionToProduct(teddies) {
 }
 
 
+function displayQuantityInCart() {
+	let quantity = JSON.parse(localStorage.getItem('cart'));
+	if (quantity === null) {
+		NumberArticles.innerText = 0;
+	}else {
+		NumberArticles.innerText = quantity.length;
+	}
+};

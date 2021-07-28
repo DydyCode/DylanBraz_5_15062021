@@ -1,6 +1,6 @@
 /***** Les constantes *****/
 const container = document.getElementById("containerCart");
-console.log(container);
+const containerForm = document.getElementById("containerForm");
 const clearCartBtn = document.getElementById("clearCartBtn");
 /***** Les variables *****/
 
@@ -21,6 +21,14 @@ if (productsInCart === null ) {
     for (var i = 0; i < productsInCart.length; i++){
         createDiv(productsInCart);
     }
+    containerForm.innerHTML = 
+    `
+    <input type="text" placeholder="Prénom">
+    <input type="text" placeholder="Nom">
+    <input type="text" placeholder="Mail">
+    <input type="text" placeholder="Adresse postal">
+    <button class="validateOrderBtn">Valider la commande</button>
+    `
 };
 
 
@@ -45,11 +53,16 @@ function createDiv(productsInCart) {
     /* Appel de la fonction qui crée un p pour la couleur selectionnée */
     const colorSelected = createColorSelected(productsInCart);
 
+    /* Appel de la fonction qui crée un bouton supprimer */
+    const deletBtn = createDeleteBtn(productsInCart);
+
     /* Montage de la div */
     containerProductCart.appendChild(image);
     containerProductCart.appendChild(name);
     containerProductCart.appendChild(price);
     containerProductCart.appendChild(colorSelected);
+    containerProductCart.appendChild(deletBtn);
+
 
     /* Ajout de la div dans le DOM */
     document.getElementById("containerCart").appendChild(containerProductCart)
@@ -92,15 +105,74 @@ function createColorSelected(productsInCart) {
     return colorSelected;
 }
 
+/***** Fonction qui crée un boutton supprimer *****/
+function  createDeleteBtn() {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add("deleteBtn");
+    deleteBtn.innerText = "Supprimer";
+
+    return deleteBtn;
+}
 
 /*****  Boutton qui vide le panier *****/
 clearCartBtn.addEventListener("click",() => {
     localStorage.clear();
-    // alert("Le panier a été vidé ");
     window.location.href = "cart.html";
 });
 
+// /***** Fonction qui crée un formulaire *****/
+// function createForm() {
+//     const container = document.createElement("div");
+//     container.classList.add("containerForm");
 
+//     const inputFirstName = document.createElement("input");
+//     inputFirstName.setAttribute("type", "text");
+//     inputFirstName.setAttribute("placeholder", "Prénom");
+
+//     const inputName = document.createElement("input");
+//     inputName.setAttribute("type", "text");
+//     inputName.setAttribute("placeholder", "Nom");
+
+//     const inputMail = document.createElement("input");
+//     inputMail.setAttribute("type", "text");
+//     inputMail.setAttribute("placeholder", "Mail");
+
+//     const inputAdressePostal = document.createElement("input");
+//     inputAdressePostal.setAttribute("type", "text");
+//     inputAdressePostal.setAttribute("placeholder", "Adresse postal");
+
+//     container.appendChild(inputFirstName);
+//     container.appendChild(inputName);
+//     container.appendChild(inputMail);
+//     container.appendChild(inputAdressePostal);
+
+//     return container;
+// }
+
+
+// // let allDeleteBtn = document.querySelectorAll(".deleteBtn");
+
+// // for (let b = 0; b < allDeleteBtn.length; b++) {
+// //     allDeleteBtn[b].addEventListener("click", (event) => {
+// //         event.preventDefault();
+
+// //         let productToDelete = productsInCart[b]._id + productsInCart[b].selectedColor;
+    
+//         // let prodcutDelete =  productToDelete.slice(productsInCart._id)
+//         // console.log(productToDelete);
+//         // productsInCart = productsInCart.filter( el => el._id !== productToDelete);
+//         // console.log(productsInCart);
+//     })
+// }
+function getCart () {
+    let ProductsInCart = localStorage.getItem("cart");
+    if (ProductsInCart === null){
+        productsInCart = [];
+        return productsInCart;
+    }else {
+        return ProductsInCart;
+    }
+}
 
 
 
