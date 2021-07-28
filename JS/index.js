@@ -94,5 +94,4 @@ function addDescriptionToProduct(teddies) {
 	return divDescription;
 }
 
-/***** Affichage du nombre de produits dans le panier *****/
 
