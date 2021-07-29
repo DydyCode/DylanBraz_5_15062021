@@ -6,7 +6,7 @@ const quantityInCart = document.getElementById("NumberArticles");
 fetch('http://localhost:3000/api/teddies/' + teddy_id)
     .then(function (product) {
         if (product.ok) {
-            return product.json();;
+            return product.json();
         }
     })
     .then(function (product) {

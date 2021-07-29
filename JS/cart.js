@@ -1,8 +1,8 @@
-/***** Les constantes *****/
+
+/***** Pointage des éléments sur le DOM *****/
 const container = document.getElementById("containerCart");
 const containerForm = document.getElementById("containerForm");
 const clearCartBtn = document.getElementById("clearCartBtn");
-/***** Les variables *****/
 
 /* Récupération des produits dans le local storage */
 let productsInCart = JSON.parse(localStorage.getItem("cart"));
@@ -23,11 +23,25 @@ if (productsInCart === null ) {
     }
     containerForm.innerHTML = 
     `
-    <input type="text" placeholder="Prénom">
-    <input type="text" placeholder="Nom">
-    <input type="text" placeholder="Mail">
-    <input type="text" placeholder="Adresse postal">
-    <button class="validateOrderBtn">Valider la commande</button>
+    <form method="post">
+        <label for="prenom" > Entrez votre Prénom :</label>
+        <input type="text" name="prenom" id="prenom" required="required" maxlength="20">
+        <span id="prenomManquant"></span>
+
+        <label for="Nom" > Entrez votre Nom :</label>
+        <input type="text" name="nom" id="nom" required="required" maxlength="20">
+        <span id="nomManquant"></span>
+
+        <label for="tel" > Entrez votre numéro de téléphone :</label>
+        <input type="tel" name="tel" id="tel" required="required">
+        <span id="telManquant"></span>
+        
+        <label for="email" > Entrez votre adresse mail :</label>
+        <input type="email" name="mail" id="mail" required="required">
+        <span id="mailManquant"></span>
+
+        <input type="submit" value="Valider ma commande" id="validateOrderBtn">
+    </form>
     `
 };
 
@@ -120,50 +134,6 @@ clearCartBtn.addEventListener("click",() => {
     window.location.href = "cart.html";
 });
 
-// /***** Fonction qui crée un formulaire *****/
-// function createForm() {
-//     const container = document.createElement("div");
-//     container.classList.add("containerForm");
-
-//     const inputFirstName = document.createElement("input");
-//     inputFirstName.setAttribute("type", "text");
-//     inputFirstName.setAttribute("placeholder", "Prénom");
-
-//     const inputName = document.createElement("input");
-//     inputName.setAttribute("type", "text");
-//     inputName.setAttribute("placeholder", "Nom");
-
-//     const inputMail = document.createElement("input");
-//     inputMail.setAttribute("type", "text");
-//     inputMail.setAttribute("placeholder", "Mail");
-
-//     const inputAdressePostal = document.createElement("input");
-//     inputAdressePostal.setAttribute("type", "text");
-//     inputAdressePostal.setAttribute("placeholder", "Adresse postal");
-
-//     container.appendChild(inputFirstName);
-//     container.appendChild(inputName);
-//     container.appendChild(inputMail);
-//     container.appendChild(inputAdressePostal);
-
-//     return container;
-// }
-
-
-// // let allDeleteBtn = document.querySelectorAll(".deleteBtn");
-
-// // for (let b = 0; b < allDeleteBtn.length; b++) {
-// //     allDeleteBtn[b].addEventListener("click", (event) => {
-// //         event.preventDefault();
-
-// //         let productToDelete = productsInCart[b]._id + productsInCart[b].selectedColor;
-    
-//         // let prodcutDelete =  productToDelete.slice(productsInCart._id)
-//         // console.log(productToDelete);
-//         // productsInCart = productsInCart.filter( el => el._id !== productToDelete);
-//         // console.log(productsInCart);
-//     })
-// }
 function getCart () {
     let ProductsInCart = localStorage.getItem("cart");
     if (ProductsInCart === null){
@@ -174,5 +144,92 @@ function getCart () {
     }
 }
 
+/********************************* Le formulaire ********************************* /
 
+/***** Les REGEX *****/
 
+let prenomValidation = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
+let telValidation = /^\d{10}$/;
+let mailValidation = /^/;
+
+/***** Pointage des éléments du formulaire sur le DOM *****/
+let prenom = document.getElementById('prenom');
+let prenomManquant = document.getElementById('prenomManquant');
+let nom = document.getElementById('nom');
+let nomManquant = document.getElementById('nomManquant');
+let tel = document.getElementById('tel');
+let telManquant = document.getElementById("telManquant");
+let mail = document.getElementById('mail');
+let mailManquant = document.getElementById('mailManquant');
+
+/***** Events *****/
+
+let validateOrderBtn = document.getElementById('validateOrderBtn');
+validateOrderBtn.addEventListener("click",(e) => {
+    firstNameIsValid(e);
+    nameIsValid(e);
+    telIsValid(e);
+    mailIsValid(e);
+})
+
+/********** Les fonctions du formulaire **********/
+
+/***** Fonction qui vérifie si le champ prénom est remplie et respect les REGEX *****/
+function firstNameIsValid(e) {
+    if(prenom.validity.valueMissing) {
+        e.preventDefault();
+        prenomManquant.textContent = "Veuillez renseignez un prénom";
+        prenomManquant.style.color = "red";
+    }else if (prenomValidation.test(prenom.value) == false){
+        e.preventDefault(); 
+        prenomManquant.textContent="Format incorrect";
+        prenomManquant.style.color ="red";
+    }else {
+
+    }
+}
+
+/***** Fonction qui vérifie si le champ Nom est remplie et respect les REGEX *****/
+function nameIsValid(e) {
+    if(nom.validity.valueMissing) {
+        e.preventDefault();
+        nomManquant.textContent = "Veuillez renseignez un nom";
+        nomManquant.style.color = "red";
+    }else if (prenomValidation.test(nom.value) == false){
+        e.preventDefault(); 
+        nomManquant.textContent="Format incorrect";
+        nomManquant.style.color ="red";
+    }else {
+
+    }
+}
+
+/***** Fonction qui vérifie si le champ tel est remplie et respect les REGEX *****/
+function telIsValid(e) {
+    if(tel.validity.valueMissing) {
+        e.preventDefault();
+        telManquant.textContent = "Veuillez renseignez un numéro";
+        telManquant.style.color = "red";
+    }else if (telValidation.test(tel.value) == false){
+        e.preventDefault(); 
+        telManquant.textContent="Format incorrect";
+        telManquant.style.color ="red";
+    }else {
+
+    }
+}
+
+/***** Fonction qui vérifie si le champ email est remplie et respect les REGEX *****/
+function mailIsValid(e) {
+    if(mail.validity.valueMissing) {
+        e.preventDefault();
+        mailManquant.textContent = "Veuillez renseignez une adresse mail";
+        mailManquant.style.color = "red";
+    }else if (mailValidation.test(mail.value) == false){
+        e.preventDefault(); 
+        mailManquant.textContent="Format incorrect";
+        mailManquant.style.color ="red";
+    }else {
+
+    }
+}
