@@ -24,21 +24,21 @@ if (productsInCart === null ) {
     containerForm.innerHTML = 
     `
     <form method="post">
-        <label for="prenom" > Entrez votre Prénom :</label>
-        <input type="text" name="prenom" id="prenom" required="required" maxlength="20">
-        <span id="prenomManquant"></span>
+        <label for="firstName" > Entrez votre Prénom :</label>
+        <input type="text" name="firstName" id="firstName" required="required" maxlength="20">
+        <span id="firstNameMissing"></span>
 
-        <label for="Nom" > Entrez votre Nom :</label>
-        <input type="text" name="nom" id="nom" required="required" maxlength="20">
-        <span id="nomManquant"></span>
+        <label for="name" > Entrez votre Nom :</label>
+        <input type="text" name="name" id="name" required="required" maxlength="20">
+        <span id="nameMissing"></span>
 
         <label for="tel" > Entrez votre numéro de téléphone :</label>
         <input type="tel" name="tel" id="tel" required="required">
-        <span id="telManquant"></span>
+        <span id="telMissing"></span>
         
         <label for="email" > Entrez votre adresse mail :</label>
         <input type="email" name="mail" id="mail" required="required">
-        <span id="mailManquant"></span>
+        <span id="mailMissing"></span>
 
         <input type="submit" value="Valider ma commande" id="validateOrderBtn">
     </form>
@@ -148,19 +148,19 @@ function getCart () {
 
 /***** Les REGEX *****/
 
-let prenomValidation = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
+let nameValidation = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
 let telValidation = /^\d{10}$/;
 let mailValidation = /^/;
 
 /***** Pointage des éléments du formulaire sur le DOM *****/
-let prenom = document.getElementById('prenom');
-let prenomManquant = document.getElementById('prenomManquant');
-let nom = document.getElementById('nom');
-let nomManquant = document.getElementById('nomManquant');
+let firstName = document.getElementById('firstName');
+let firstNameMissing = document.getElementById('firstNameMissing');
+let nameUser = document.getElementById('name');
+let nameMissing = document.getElementById('nameMissing');
 let tel = document.getElementById('tel');
-let telManquant = document.getElementById("telManquant");
+let telMissing = document.getElementById("telMissing");
 let mail = document.getElementById('mail');
-let mailManquant = document.getElementById('mailManquant');
+let mailMissing = document.getElementById('mailMissing');
 
 /***** Events *****/
 
@@ -176,14 +176,14 @@ validateOrderBtn.addEventListener("click",(e) => {
 
 /***** Fonction qui vérifie si le champ prénom est remplie et respect les REGEX *****/
 function firstNameIsValid(e) {
-    if(prenom.validity.valueMissing) {
+    if(firstName.validity.valueMissing) {
         e.preventDefault();
-        prenomManquant.textContent = "Veuillez renseignez un prénom";
-        prenomManquant.style.color = "red";
-    }else if (prenomValidation.test(prenom.value) == false){
+        firstNameMissing.textContent = "Veuillez renseignez un prénom";
+        firstNameMissing.style.color = "red";
+    }else if (nameValidation.test(firstName.value) == false){
         e.preventDefault(); 
-        prenomManquant.textContent="Format incorrect";
-        prenomManquant.style.color ="red";
+        firstNameMissing.textContent="Format incorrect";
+        firstNameMissing.style.color ="red";
     }else {
 
     }
@@ -191,14 +191,14 @@ function firstNameIsValid(e) {
 
 /***** Fonction qui vérifie si le champ Nom est remplie et respect les REGEX *****/
 function nameIsValid(e) {
-    if(nom.validity.valueMissing) {
+    if(nameUser.validity.valueMissing) {
         e.preventDefault();
-        nomManquant.textContent = "Veuillez renseignez un nom";
-        nomManquant.style.color = "red";
-    }else if (prenomValidation.test(nom.value) == false){
+        nameMissing.textContent = "Veuillez renseignez un nom";
+        nameMissing.style.color = "red";
+    }else if (nameValidation.test(nameUser.value) == false){
         e.preventDefault(); 
-        nomManquant.textContent="Format incorrect";
-        nomManquant.style.color ="red";
+        nameMissing.textContent="Format incorrect";
+        nameMissing.style.color ="red";
     }else {
 
     }
@@ -208,12 +208,12 @@ function nameIsValid(e) {
 function telIsValid(e) {
     if(tel.validity.valueMissing) {
         e.preventDefault();
-        telManquant.textContent = "Veuillez renseignez un numéro";
-        telManquant.style.color = "red";
+        telMissing.textContent = "Veuillez renseignez un numéro";
+        telMissing.style.color = "red";
     }else if (telValidation.test(tel.value) == false){
         e.preventDefault(); 
-        telManquant.textContent="Format incorrect";
-        telManquant.style.color ="red";
+        telMissing.textContent="Format incorrect";
+        telMissing.style.color ="red";
     }else {
 
     }
@@ -223,12 +223,12 @@ function telIsValid(e) {
 function mailIsValid(e) {
     if(mail.validity.valueMissing) {
         e.preventDefault();
-        mailManquant.textContent = "Veuillez renseignez une adresse mail";
-        mailManquant.style.color = "red";
+        mailMissing.textContent = "Veuillez renseignez une adresse mail";
+        mailMissing.style.color = "red";
     }else if (mailValidation.test(mail.value) == false){
         e.preventDefault(); 
-        mailManquant.textContent="Format incorrect";
-        mailManquant.style.color ="red";
+        mailMissing.textContent="Format incorrect";
+        mailMissing.style.color ="red";
     }else {
 
     }
