@@ -40,6 +40,14 @@ if (productsInCart === null ) {
         <input type="email" name="mail" id="mail" required="required">
         <span id="mailMissing"></span>
 
+        <label for="adresse" > Entrez votre adresse :</label>
+        <input type="adresse" name="adresse" id="adresse" required="required">
+        <span id="adresseMissing"></span>
+
+        <label for="postal" > Entrez votre adresse code postal :</label>
+        <input type="postal" name="postal" id="postal" required="required">
+        <span id="postalMissing"></span>
+
         <input type="submit" value="Valider ma commande" id="validateOrderBtn">
     </form>
     `
@@ -70,12 +78,16 @@ function createDiv(productsInCart) {
     /* Appel de la fonction qui crée un bouton supprimer */
     const deletBtn = createDeleteBtn(productsInCart);
 
+    /* Appel de la fonction qui crée un p pour afficher le total a payer */
+    const total = createPforTotal(productsInCart);
+
     /* Montage de la div */
     containerProductCart.appendChild(image);
     containerProductCart.appendChild(name);
     containerProductCart.appendChild(price);
     containerProductCart.appendChild(colorSelected);
     containerProductCart.appendChild(deletBtn);
+    containerCart.appendChild(total);
 
 
     /* Ajout de la div dans le DOM */
@@ -119,6 +131,14 @@ function createColorSelected(productsInCart) {
     return colorSelected;
 }
 
+/***** Fonction qui crée une balise p pour afficher le total a payer *****/
+function createPforTotal() {
+    const total = document.createElement('p');
+    total.classList.add('totalOrder');
+    
+    return total;
+}
+
 /***** Fonction qui crée un boutton supprimer *****/
 function  createDeleteBtn() {
     const deleteBtn = document.createElement('button');
@@ -144,6 +164,25 @@ function getCart () {
     }
 }
 
+/**************************** Le montant total du panier ****************************/
+
+let total = [];
+
+/***** Boucle qui va chercher tout les prix dans le panier ******/
+for (let i = 0; i < productsInCart.length; i++) {
+    total.push(productsInCart[i].price);
+
+}
+
+/***** Calcul tu prix total *****/
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+const totalPrice = (total.reduce(reducer) /100 .toFixed(2));
+
+/***** Affichage du prix total sur le DOM *****/
+
+const divTotal = document.querySelector('.totalOrder');
+divTotal.textContent = "prix total : " + totalPrice + "€";
+
 /********************************* Le formulaire ********************************* /
 
 /***** Les REGEX *****/
@@ -151,6 +190,7 @@ function getCart () {
 let nameValidation = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
 let telValidation = /^\d{10}$/;
 let mailValidation = /^/;
+let postalValidation = /^\d{5}$/
 
 /***** Pointage des éléments du formulaire sur le DOM *****/
 let firstName = document.getElementById('firstName');
@@ -161,6 +201,8 @@ let tel = document.getElementById('tel');
 let telMissing = document.getElementById("telMissing");
 let mail = document.getElementById('mail');
 let mailMissing = document.getElementById('mailMissing');
+let postal = document.getElementById('postal');
+let postalMissing = document.getElementById('postalMissing');
 
 /***** Events *****/
 
@@ -170,6 +212,7 @@ validateOrderBtn.addEventListener("click",(e) => {
     nameIsValid(e);
     telIsValid(e);
     mailIsValid(e);
+    postalIsValid(e);
 })
 
 /********** Les fonctions du formulaire **********/
@@ -219,7 +262,7 @@ function telIsValid(e) {
     }
 }
 
-/***** Fonction qui vérifie si le champ email est remplie et respect les REGEX *****/
+/***** Fonction qui vérifie si le champ email est rempli et respect les REGEX *****/
 function mailIsValid(e) {
     if(mail.validity.valueMissing) {
         e.preventDefault();
@@ -233,3 +276,19 @@ function mailIsValid(e) {
 
     }
 }
+
+/***** Fonction qui vérifie si le champ code postal est rempli et respect les REGEX *****/
+function postalIsValid(e) {
+    if(postal.validity.valueMissing) {
+        e.preventDefault();
+        postalMissing.textContent = "Veuillez renseignez un code postal";
+        postalMissing.style.color = "red";
+    }else if (postalValidation.test(postal.value) == false){
+        e.preventDefault(); 
+        postalMissing.textContent="Format incorrect";
+        postalMissing.style.color ="red";
+    }else {
+
+    }
+}
+

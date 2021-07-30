@@ -127,6 +127,11 @@ footer ul {
 }
 
 /***** Cart *****/
+#containerCart {
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+}
 
 .containerProductCart {
     display: flex;
@@ -136,7 +141,7 @@ footer ul {
 .containerProductCart img {
     width: 200px;
 }
-.containerProductCart p {
+.containerProductCart p, #containerCart p  {
     font-size: 22px;
 }
 #clearCartBtn {
@@ -177,6 +182,12 @@ footer ul {
     background: rgb(250, 77, 77);
     color: white;
 }
+.totalOrder {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin: 1rem;
+}
 /* Formulaire */
 #containerForm {
     display: flex;
@@ -197,6 +208,7 @@ footer ul {
     font-size: 16px;
     padding: 15px!important;
     color: white;
+    margin-bottom: 3rem;
 }
 .flex {
     display: flex;
