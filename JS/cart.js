@@ -37,6 +37,10 @@ if (productsInCart === null) {
         <input type="tel" name="tel" id="tel" required="required">
         <span id="telMissing"></span>
         
+        <label for="postal" > Entrez votre code postal :</label>
+        <input type="postal" name="postal" id="postal" required="required">
+        <span id="postalMissing"></span>
+
         <label for="email" > Entrez votre adresse mail :</label>
         <input type="email" name="mail" id="mail" required="required">
         <span id="mailMissing"></span>
@@ -68,14 +72,14 @@ function createDiv(productsInCart) {
     const colorSelected = createColorSelected(productsInCart);
 
     /* Appel de la fonction qui crée un bouton supprimer */
-    const deletBtn = createDeleteBtn(productsInCart);
+    // const deletBtn = createDeleteBtn(productsInCart);
 
     /* Montage de la div */
     containerProductCart.appendChild(image);
     containerProductCart.appendChild(name);
     containerProductCart.appendChild(price);
     containerProductCart.appendChild(colorSelected);
-    containerProductCart.appendChild(deletBtn);
+    // containerProductCart.appendChild(deletBtn);
 
     /* Ajout de la div dans le DOM */
     document.getElementById("containerCart").appendChild(containerProductCart)
@@ -130,13 +134,13 @@ const prixtotalapayer = createPforTotal();
 container.appendChild(prixtotalapayer);
 
 /***** Fonction qui crée un boutton supprimer *****/
-function createDeleteBtn() {
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add("deleteBtn");
-    deleteBtn.innerText = "Supprimer";
+// function createDeleteBtn() {
+//     const deleteBtn = document.createElement('button');
+//     deleteBtn.classList.add("deleteBtn");
+//     deleteBtn.innerText = "Supprimer";
 
-    return deleteBtn;
-}
+//     return deleteBtn;
+// }
 
 /*****  Boutton qui vide le panier *****/
 clearCartBtn.addEventListener("click", () => {
@@ -170,101 +174,117 @@ totalDiv.innerText = "Total à payer : " + totalOder + "€";
 let nameValidation = /^[a-zA-ZéèîïÉÈÎÏÜÛ][a-zéèêàçîï]+([' -][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
 let telValidation = /^\d{10}$/;
 let postalValidation = /^\d{5}$/;
+let mailValidation = /^/;
 
-/***** Pointage des éléments du formulaire sur le DOM *****/
-let firstName = document.getElementById('firstName');
-let firstNameMissing = document.getElementById('firstNameMissing');
-let nameUser = document.getElementById('name');
-let nameMissing = document.getElementById('nameMissing');
-let tel = document.getElementById('tel');
-let telMissing = document.getElementById("telMissing");
-let mail = document.getElementById('mail');
-let mailMissing = document.getElementById('mailMissing');
+/***** Pointage du buton "valider la commande" sur le DOM *****/
+const validateOrderBtn = document.getElementById('validateOrderBtn');
 
-/***** Events *****/
+/***** Event sur le bouton "valider la commande" *****/
+validateOrderBtn.addEventListener('click',(e) => {
+    firstNameIsValid(e);
+    nameIsValid(e);
+    telIsValid(e);
+    postalIsValid(e);
+    mailIsValid(e);
+} );
 
-let validateOrderBtn = document.getElementById('validateOrderBtn');
+/***** Fonction qui test l'input du prénom ******/
+function firstNameIsValid(e) {
+    /* Pointage des éléments sur le DOM */
+    let firstName = document.getElementById('firstName');
+    let firstNameMissing = document.getElementById('firstNameMissing');
 
-if (productsInCart === ! null) {
-    validateOrderBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        firstNameIsValid(e);
-        nameIsValid(e);
-        telIsValid(e);
-        mailIsValid(e);
-        postalIsValid(e);
-    })
-}
-
-
-/********** Les fonctions du formulaire **********/
-
-/***** Fonction qui vérifie si le champ prénom est remplie et respect les REGEX *****/
-function firstNameIsValid() {
+    /* Test si l'utilisateur a rempli l'input */
     if (firstName.validity.valueMissing) {
-
-        firstNameMissing.textContent = "Veuillez renseignez un prénom";
+        e.preventDefault();
+        firstNameMissing.textContent = "Prénom manquant";
         firstNameMissing.style.color = "red";
-    } else if (nameValidation.test(firstName.value) == false) {
 
+        /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
+    }else if (nameValidation.test(firstName.value) == false) {
+        e.preventDefault();
         firstNameMissing.textContent = "Format incorrect";
         firstNameMissing.style.color = "red";
-    } else {
-
     }
 }
 
-/***** Fonction qui vérifie si le champ Nom est remplie et respect les REGEX *****/
-function nameIsValid() {
+/***** Fonction qui test l'input du nom *****/
+function nameIsValid(e) {
+        /* Pointage des éléments sur le DOM */
+    let nameUser = document.getElementById('name');
+    let nameMissing = document.getElementById('nameMissing');
+    
+    /* Test si l'utilisateur a rempli l'input */
     if (nameUser.validity.valueMissing) {
-
-        nameMissing.textContent = "Veuillez renseignez un nom";
+        e.preventDefault();
+        nameMissing.textContent = "Nom manquant";
         nameMissing.style.color = "red";
-    } else if (nameValidation.test(nameUser.value) == false) {
 
+        /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
+    }else if (nameValidation.test(nameUser.value) == false) {
+        e.preventDefault();
         nameMissing.textContent = "Format incorrect";
         nameMissing.style.color = "red";
-    } else {
-
     }
 }
 
-/***** Fonction qui vérifie si le champ tel est remplie et respect les REGEX *****/
-function telIsValid() {
-    if (tel.validity.valueMissing) {
-        telMissing.textContent = "Veuillez renseignez un numéro";
-        telMissing.style.color = "red";
-    } else if (telValidation.test(tel.value) == false) {
-        telMissing.textContent = "Format incorrect";
-        telMissing.style.color = "red";
-    } else {
-
-    }
+/***** Fonction qui test l'input du numéro de téléphone *****/
+function telIsValid(e) {
+         /* Pointage des éléments sur le DOM */
+         let tel = document.getElementById('tel');
+         let telMissing = document.getElementById('telMissing');
+         
+         /* Test si l'utilisateur a rempli l'input */
+         if (tel.validity.valueMissing) {
+             e.preventDefault();
+             telMissing.textContent = "Prénom manquant";
+             telMissing.style.color = "red";
+     
+             /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
+         }else if (telValidation.test(tel.value) == false) {
+             e.preventDefault();
+             telMissing.textContent = "Format incorrect";
+             telMissing.style.color = "red";
+         }
 }
 
-/***** Fonction qui vérifie si le champ email est rempli et respect les REGEX *****/
-function mailIsValid() {
-    if (mail.validity.valueMissing) {
-        mailMissing.textContent = "Veuillez renseignez une adresse mail";
-        mailMissing.style.color = "red";
-    } else if (mailValidation.test(mail.value) == false) {
-        mailMissing.textContent = "Format incorrect";
-        mailMissing.style.color = "red";
-    } else {
+/***** Fonction qui test l'input code postal *****/
+function postalIsValid(e) {
+      /* Pointage des éléments sur le DOM */
+    let postal = document.getElementById('postal');
+    let postalMissing = document.getElementById('postalMissing');
 
-    }
-}
-
-/***** Fonction qui vérifie si le champ code postal est rempli et respect les REGEX *****/
-function postalIsValid() {
+    /* Test si l'utilisateur a rempli l'input */
     if (postal.validity.valueMissing) {
-        postalMissing.textContent = "Veuillez renseignez un code postal";
+        e.preventDefault();
+        postalMissing.textContent = "Code postal manquant";
         postalMissing.style.color = "red";
-    } else if (postalValidation.test(postal.value) == false) {
+
+        /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
+    }else if (postalValidation.test(postal.value) == false) {
+        e.preventDefault();
         postalMissing.textContent = "Format incorrect";
         postalMissing.style.color = "red";
-    } else {
+    }
+}
 
+/***** Fonction qui test l'input adresse mail *****/
+function mailIsValid(e) {
+    /* Pointage des éléments sur le DOM */
+    let mail = document.getElementById('mail');
+    let mailMissing = document.getElementById('mailMissing');
+
+      /* Test si l'utilisateur a rempli l'input */
+      if (mail.validity.valueMissing) {
+        e.preventDefault();
+        mailMissing.textContent = "Adresse mail manquante";
+        mailMissing.style.color = "red";
+
+        /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
+    }else if (mailValidation.test(mail.value) == false) {
+        e.preventDefault();
+        mailMissing.textContent = "Format incorrect";
+        mailMissing.style.color = "red";
     }
 }
 
