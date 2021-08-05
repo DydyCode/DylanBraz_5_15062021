@@ -136,7 +136,7 @@ footer ul {
 .containerProductCart img {
     width: 200px;
 }
-.containerProductCart p {
+.containerProductCart p, #totalOrder {
     font-size: 22px;
 }
 #clearCartBtn {
@@ -200,4 +200,13 @@ footer ul {
 }
 .flex {
     display: flex;
+}
+#totalOrder {
+    display: block;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+#containerCart {
+    display: flex;
+    flex-direction: column;
 }
