@@ -42,14 +42,6 @@ if (productsInCart === null ) {
         <input type="email" name="mail" id="mail" required="required">
         <span id="mailMissing"></span>
 
-        <label for="adresse" > Entrez votre adresse :</label>
-        <input type="adresse" name="adresse" id="adresse" required="required">
-        <span id="adresseMissing"></span>
-
-        <label for="postal" > Entrez votre adresse code postal :</label>
-        <input type="postal" name="postal" id="postal" required="required">
-        <span id="postalMissing"></span>
-
         <input type="submit" value="Valider ma commande" id="validateOrderBtn">
     </form>
     `
@@ -129,6 +121,7 @@ function createColorSelected(productsInCart) {
     return colorSelected;
 }
 
+<<<<<<< HEAD
 /***** Fonction qui crée une balise p pour afficher le total a payer *****/
 function createPforTotal() {
     const total = document.createElement('p');
@@ -138,6 +131,8 @@ function createPforTotal() {
     return total;
 }
 
+=======
+>>>>>>> parent of 808aa58 (Ajout prix total panier + regex code Postal)
 /***** Fonction qui crée un boutton supprimer *****/
 function  createDeleteBtn() {
     const deleteBtn = document.createElement('button');
@@ -153,6 +148,7 @@ clearCartBtn.addEventListener("click",() => {
     window.location.href = "cart.html";
 });
 
+<<<<<<< HEAD
 /**************************** Le montant total du panier ****************************/
 
 let total = [];
@@ -175,6 +171,17 @@ if (totalPrice ===! null) {
     divTotal.textContent = "prix total : " + totalPrice + "€";
 }
 /***** Affichage du prix total sur le DOM *****/
+=======
+function getCart () {
+    let ProductsInCart = localStorage.getItem("cart");
+    if (ProductsInCart === null){
+        productsInCart = [];
+        return productsInCart;
+    }else {
+        return ProductsInCart;
+    }
+}
+>>>>>>> parent of 808aa58 (Ajout prix total panier + regex code Postal)
 
 /********************************* Le formulaire ********************************* /
 
@@ -182,7 +189,11 @@ if (totalPrice ===! null) {
 
 let nameValidation = /^[a-zA-ZéèîïÉÈÎÏÜÛ][a-zéèêàçîï]+([' -][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
 let telValidation = /^\d{10}$/;
+<<<<<<< HEAD
 let postalValidation = /^\d{5}$/;
+=======
+let mailValidation = /^/;
+>>>>>>> parent of 808aa58 (Ajout prix total panier + regex code Postal)
 
 /***** Pointage des éléments du formulaire sur le DOM *****/
 let firstName = document.getElementById('firstName');
@@ -193,12 +204,11 @@ let tel = document.getElementById('tel');
 let telMissing = document.getElementById("telMissing");
 let mail = document.getElementById('mail');
 let mailMissing = document.getElementById('mailMissing');
-let postal = document.getElementById('postal');
-let postalMissing = document.getElementById('postalMissing');
 
 /***** Events *****/
 
 let validateOrderBtn = document.getElementById('validateOrderBtn');
+<<<<<<< HEAD
 
 if (productsInCart ===! null) {
     validateOrderBtn.addEventListener("click",(e) => {
@@ -211,6 +221,14 @@ if (productsInCart ===! null) {
     })
 }
 
+=======
+validateOrderBtn.addEventListener("click",(e) => {
+    firstNameIsValid(e);
+    nameIsValid(e);
+    telIsValid(e);
+    mailIsValid(e);
+})
+>>>>>>> parent of 808aa58 (Ajout prix total panier + regex code Postal)
 
 /********** Les fonctions du formulaire **********/
 
@@ -257,8 +275,13 @@ function telIsValid() {
     }
 }
 
+<<<<<<< HEAD
 /***** Fonction qui vérifie si le champ email est rempli et respect les REGEX *****/
 function mailIsValid() {
+=======
+/***** Fonction qui vérifie si le champ email est remplie et respect les REGEX *****/
+function mailIsValid(e) {
+>>>>>>> parent of 808aa58 (Ajout prix total panier + regex code Postal)
     if(mail.validity.valueMissing) {
         mailMissing.textContent = "Veuillez renseignez une adresse mail";
         mailMissing.style.color = "red";
@@ -268,6 +291,7 @@ function mailIsValid() {
     }else {
 
     }
+<<<<<<< HEAD
 }
 
 /***** Fonction qui vérifie si le champ code postal est rempli et respect les REGEX *****/
@@ -283,3 +307,6 @@ function postalIsValid() {
     }
 }
 
+=======
+}
+>>>>>>> parent of 808aa58 (Ajout prix total panier + regex code Postal)
