@@ -1,8 +1,11 @@
+/***** Pointage des éléments sur le DOM *****/
 const productpage = document.getElementById("productpage");
+
+/***** Récupère l'id du produit dans l'url *****/
 const urlParams = new URLSearchParams(window.location.search);
 const teddy_id = urlParams.get('id');
-const quantityInCart = document.getElementById("NumberArticles");
 
+/***** Appel de l'api *****/
 fetch('http://localhost:3000/api/teddies/' + teddy_id)
     .then(function (product) {
         if (product.ok) {
@@ -100,17 +103,11 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                 compulsorychoice.innerText = "Article ajoué au panier"
                 compulsorychoice.style = "visibility : visible";
                 saveProductInCart(JSON.parse(localStorage.getItem('currentProduct')));
-                addQuantityInCart();
+                displayQuantityInCart();
                 // compulsorychoiceHidden();
             }
         });
     });
-
-/***** Fonction qui ajoute un dans le logo du panier sur le DOM *****/
-function addQuantityInCart() {
-    let quantityProductsInCart = JSON.parse(localStorage.getItem("cart")).length;
-    quantityInCart.textContent = quantityProductsInCart;
-}
 
 // /***** Fonction qui créé qui une nouvelle 'option' et qui l'ajoute  *****/
 
@@ -124,13 +121,3 @@ function addOptionToSelect(opt) {
     newOption.textContent = opt;
     return newOption
 }
-
-/***** Fonction qui affiche le nombre d'article dans le panier ******/
-function displayQuantityInCart() {
-    let quantity = JSON.parse(localStorage.getItem('cart'));
-	if (quantity === null) {
-		NumberArticles.innerText = 0;
-	}else {
-		NumberArticles.innerText = quantity.length;
-	}
-};

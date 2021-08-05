@@ -2,6 +2,7 @@
 const containerTeddies = document.getElementById("teddiesGeneralContainer");
 const NumberArticles = document.getElementById("NumberArticles");
 
+
  
 /***** Le fetch *****/
 fetch('http://localhost:3000/api/teddies') 

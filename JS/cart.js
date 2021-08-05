@@ -7,7 +7,7 @@ const clearCartBtn = document.getElementById("clearCartBtn");
 /* Récupération des produits dans le local storage */
 let productsInCart = JSON.parse(localStorage.getItem("cart"));
 
-/* Stockage du nombre de produit du localStorage dans un variable */
+/***** Test si le panier est vide *****/
 if (productsInCart === null ) {
     container.innerHTML =   `
     <div id="containerCartEmpty">
@@ -18,8 +18,9 @@ if (productsInCart === null ) {
     `
     clearCartBtn.style = "display: none"
 }else {
-    for (var i = 0; i < productsInCart.length; i++){
-        createDiv(productsInCart);
+    /***** Si le panier n'est pas vide *****/
+    for (let i = 0; i < productsInCart.length; i++){
+        createDiv(productsInCart[i]);
     }
     containerForm.innerHTML = 
     `
@@ -51,7 +52,7 @@ if (productsInCart === null ) {
         <input type="submit" value="Valider ma commande" id="validateOrderBtn">
     </form>
     `
-};
+}
 
 
 
@@ -98,7 +99,7 @@ function createDiv(productsInCart) {
 function createimg(productsInCart) {
     const imageFigure = document.createElement("figure");
 	const image = document.createElement("img");
-	image.setAttribute("src", productsInCart[i].imageUrl);
+	image.setAttribute("src", productsInCart.imageUrl);
 	imageFigure.appendChild(image);
 
 	return image;
@@ -108,7 +109,7 @@ function createimg(productsInCart) {
 function createName(productsInCart) {
     const name = document.createElement("p");
     name.classList.add("nameProductInCart");
-    name.innerText = productsInCart[i].name;
+    name.innerText = productsInCart.name;
 
     return name;
 };
@@ -117,7 +118,7 @@ function createName(productsInCart) {
 function createPrice(productsInCart) {
     const price = document.createElement("p");
     price.classList.add("priceProductInCart");
-    price.innerText = (productsInCart[i].price/ 100).toFixed(2) + "€";
+    price.innerText = (productsInCart.price/ 100).toFixed(2) + "€";
 
     return price;
 };
@@ -126,7 +127,7 @@ function createPrice(productsInCart) {
 function createColorSelected(productsInCart) {
     const colorSelected = document.createElement("p");
     colorSelected.classList.add("colorSelected");
-    colorSelected.innerText = productsInCart[i].selectedColor;
+    colorSelected.innerText = productsInCart.selectedColor;
 
     return colorSelected;
 }
@@ -154,43 +155,39 @@ clearCartBtn.addEventListener("click",() => {
     window.location.href = "cart.html";
 });
 
-function getCart () {
-    let ProductsInCart = localStorage.getItem("cart");
-    if (ProductsInCart === null){
-        productsInCart = [];
-        return productsInCart;
-    }else {
-        return ProductsInCart;
-    }
-}
-
 /**************************** Le montant total du panier ****************************/
 
 let total = [];
 
 /***** Boucle qui va chercher tout les prix dans le panier ******/
-for (let i = 0; i < productsInCart.length; i++) {
-    total.push(productsInCart[i].price);
 
+if (total ===! null) {
+    for (let i = 0; i < productsInCart.length; i++) {
+        total.push(productsInCart[i].price);
+    }
 }
 
-/***** Calcul tu prix total *****/
-const reducer = (accumulator, currentValue) => accumulator + currentValue;
-const totalPrice = (total.reduce(reducer) /100 .toFixed(2));
 
+
+/***** Calcul tu prix total *****/
+
+let totalPrice;
+if (totalPrice ===! null) {
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    totalPrice = (total.reduce(reducer) /100 .toFixed(2));
+    const divTotal = document.querySelector('.totalOrder');
+    divTotal.textContent = "prix total : " + totalPrice + "€";
+}
 /***** Affichage du prix total sur le DOM *****/
 
-const divTotal = document.querySelector('.totalOrder');
-divTotal.textContent = "prix total : " + totalPrice + "€";
 
 /********************************* Le formulaire ********************************* /
 
 /***** Les REGEX *****/
 
-let nameValidation = /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
+let nameValidation = /^[a-zA-ZéèîïÉÈÎÏÜÛ][a-zéèêàçîï]+([' -][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
 let telValidation = /^\d{10}$/;
-let mailValidation = /^/;
-let postalValidation = /^\d{5}$/
+let postalValidation = /^\d{5}$/;
 
 /***** Pointage des éléments du formulaire sur le DOM *****/
 let firstName = document.getElementById('firstName');
@@ -207,24 +204,29 @@ let postalMissing = document.getElementById('postalMissing');
 /***** Events *****/
 
 let validateOrderBtn = document.getElementById('validateOrderBtn');
-validateOrderBtn.addEventListener("click",(e) => {
-    firstNameIsValid(e);
-    nameIsValid(e);
-    telIsValid(e);
-    mailIsValid(e);
-    postalIsValid(e);
-})
+
+if (productsInCart ===! null) {
+    validateOrderBtn.addEventListener("click",(e) => {
+        e.preventDefault();
+        firstNameIsValid(e);
+        nameIsValid(e);
+        telIsValid(e);
+        mailIsValid(e);
+        postalIsValid(e);
+    })
+}
+
 
 /********** Les fonctions du formulaire **********/
 
 /***** Fonction qui vérifie si le champ prénom est remplie et respect les REGEX *****/
-function firstNameIsValid(e) {
+function firstNameIsValid() {
     if(firstName.validity.valueMissing) {
-        e.preventDefault();
+      
         firstNameMissing.textContent = "Veuillez renseignez un prénom";
         firstNameMissing.style.color = "red";
     }else if (nameValidation.test(firstName.value) == false){
-        e.preventDefault(); 
+   
         firstNameMissing.textContent="Format incorrect";
         firstNameMissing.style.color ="red";
     }else {
@@ -233,13 +235,13 @@ function firstNameIsValid(e) {
 }
 
 /***** Fonction qui vérifie si le champ Nom est remplie et respect les REGEX *****/
-function nameIsValid(e) {
+function nameIsValid() {
     if(nameUser.validity.valueMissing) {
-        e.preventDefault();
+       
         nameMissing.textContent = "Veuillez renseignez un nom";
         nameMissing.style.color = "red";
     }else if (nameValidation.test(nameUser.value) == false){
-        e.preventDefault(); 
+    
         nameMissing.textContent="Format incorrect";
         nameMissing.style.color ="red";
     }else {
@@ -248,13 +250,11 @@ function nameIsValid(e) {
 }
 
 /***** Fonction qui vérifie si le champ tel est remplie et respect les REGEX *****/
-function telIsValid(e) {
+function telIsValid() {
     if(tel.validity.valueMissing) {
-        e.preventDefault();
         telMissing.textContent = "Veuillez renseignez un numéro";
         telMissing.style.color = "red";
     }else if (telValidation.test(tel.value) == false){
-        e.preventDefault(); 
         telMissing.textContent="Format incorrect";
         telMissing.style.color ="red";
     }else {
@@ -263,13 +263,11 @@ function telIsValid(e) {
 }
 
 /***** Fonction qui vérifie si le champ email est rempli et respect les REGEX *****/
-function mailIsValid(e) {
+function mailIsValid() {
     if(mail.validity.valueMissing) {
-        e.preventDefault();
         mailMissing.textContent = "Veuillez renseignez une adresse mail";
         mailMissing.style.color = "red";
     }else if (mailValidation.test(mail.value) == false){
-        e.preventDefault(); 
         mailMissing.textContent="Format incorrect";
         mailMissing.style.color ="red";
     }else {
@@ -278,13 +276,11 @@ function mailIsValid(e) {
 }
 
 /***** Fonction qui vérifie si le champ code postal est rempli et respect les REGEX *****/
-function postalIsValid(e) {
+function postalIsValid() {
     if(postal.validity.valueMissing) {
-        e.preventDefault();
         postalMissing.textContent = "Veuillez renseignez un code postal";
         postalMissing.style.color = "red";
     }else if (postalValidation.test(postal.value) == false){
-        e.preventDefault(); 
         postalMissing.textContent="Format incorrect";
         postalMissing.style.color ="red";
     }else {
