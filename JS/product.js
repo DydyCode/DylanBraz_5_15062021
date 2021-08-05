@@ -14,7 +14,7 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
     })
     .then(function (product) {
 
-        /* Fonction qui affiche le nombre d'article dans le panier */
+        /* Appel de la fonction qui affich et met à jour le nombre d'article dans le panier */
         displayQuantityInCart();
 
         localStorage.setItem('currentProduct', JSON.stringify(product));
@@ -59,40 +59,21 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
             return baseChoice;
         }
 
-        /* Ajout de l'option "Choisissez une couleur " */
+        /* Appel de la fonction qui crée une option "choisissez une couleur et la séléctionne" */
         addBaseChoice();
 
-        /* Ajout des couleurs */
+        /* Ajout des couleurs dans le select */
         product.colors.forEach(option => {
             newchoice = addOptionToSelect(option);
             document.getElementById('colorsChoices').appendChild(newchoice);
         });
 
-        function saveProductInCart(product) {
-            // let currentProduct = JSON.parse(localStorage.currentProduct);
-            let selectedColor = document.getElementById('colorsChoices').value;
-            product.selectedColor = selectedColor;
-            /*  
-            let result = var1 == var2 ? valueIfTrue : valueIfFalse;
-
-            let result;
-            if (localStorage.getItem("cart") === null) {
-                result = [];
-            } else {
-                result = JSON.parse(localStorage.getItem("cart"));
-            }
-            
-            */
-            let stringifiedCart = localStorage.getItem("cart");
-            let cart = stringifiedCart === null ? [] : JSON.parse(stringifiedCart);
-            cart.push(product);
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
+        /* Pointage du bouton ajouter au panier sur le DOM */
         const btnAddToCart = document.querySelector('button');
 
+        /* event sur le bouton ajouter au panier */
         btnAddToCart.addEventListener("click", () => {
             if (document.getElementById('colorsChoices').value === choice) {
-                // compulsorychoiceVisible();
                 const compulsorychoice = document.getElementById("hidden");
                 compulsorychoice.classList.add("textRed");
                 compulsorychoice.innerText = "Veuillez choisir une couleur"
@@ -103,13 +84,13 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                 compulsorychoice.innerText = "Article ajoué au panier"
                 compulsorychoice.style = "visibility : visible";
                 saveProductInCart(JSON.parse(localStorage.getItem('currentProduct')));
+                /* Appel de la fonction qui affich et met à jour le nombre d'article dans le panier */
                 displayQuantityInCart();
-                // compulsorychoiceHidden();
             }
         });
     });
 
-// /***** Fonction qui créé qui une nouvelle 'option' et qui l'ajoute  *****/
+/***** Fonction qui créé qui une nouvelle 'option' et qui l'ajoute  *****/
 
 function addOptionToSelect(opt) {
 
@@ -120,4 +101,16 @@ function addOptionToSelect(opt) {
 
     newOption.textContent = opt;
     return newOption
+}
+/***** Fonction qui sauvegarde un produit dans le localStorage ******/
+function saveProductInCart(product) {
+    let selectedColor = document.getElementById('colorsChoices').value;
+    product.selectedColor = selectedColor;
+  
+    let stringifiedCart = localStorage.getItem("cart");
+
+    /* Ternaire qui test si le panier est null */
+    let cart = stringifiedCart === null ? [] : JSON.parse(stringifiedCart);
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
 }

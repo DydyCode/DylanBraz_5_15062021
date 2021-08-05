@@ -18,6 +18,7 @@ if (productsInCart === null ) {
     `
     clearCartBtn.style = "display: none"
 }else {
+    createPforTotal();
     /***** Si le panier n'est pas vide *****/
     for (let i = 0; i < productsInCart.length; i++){
         createDiv(productsInCart[i]);
@@ -79,16 +80,12 @@ function createDiv(productsInCart) {
     /* Appel de la fonction qui crée un bouton supprimer */
     const deletBtn = createDeleteBtn(productsInCart);
 
-    /* Appel de la fonction qui crée un p pour afficher le total a payer */
-    const total = createPforTotal(productsInCart);
-
     /* Montage de la div */
     containerProductCart.appendChild(image);
     containerProductCart.appendChild(name);
     containerProductCart.appendChild(price);
     containerProductCart.appendChild(colorSelected);
     containerProductCart.appendChild(deletBtn);
-    containerCart.appendChild(total);
 
 
     /* Ajout de la div dans le DOM */
@@ -136,6 +133,7 @@ function createColorSelected(productsInCart) {
 function createPforTotal() {
     const total = document.createElement('p');
     total.classList.add('totalOrder');
+    total.appendChild(container)
     
     return total;
 }
@@ -165,21 +163,18 @@ if (total ===! null) {
     for (let i = 0; i < productsInCart.length; i++) {
         total.push(productsInCart[i].price);
     }
+    
 }
-
-
-
 /***** Calcul tu prix total *****/
 
-let totalPrice;
+let totalPrice = [];
 if (totalPrice ===! null) {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     totalPrice = (total.reduce(reducer) /100 .toFixed(2));
-    const divTotal = document.querySelector('.totalOrder');
+    const divTotal = document.getElementsByClassName('totalOrder');
     divTotal.textContent = "prix total : " + totalPrice + "€";
 }
 /***** Affichage du prix total sur le DOM *****/
-
 
 /********************************* Le formulaire ********************************* /
 

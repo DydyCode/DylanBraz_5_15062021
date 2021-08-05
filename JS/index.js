@@ -1,9 +1,7 @@
-/***** Les constantes *****/
+/***** Pointage des éléments sur le DOM *****/
 const containerTeddies = document.getElementById("teddiesGeneralContainer");
 const NumberArticles = document.getElementById("NumberArticles");
 
-
- 
 /***** Le fetch *****/
 fetch('http://localhost:3000/api/teddies') 
 .then (function(res) {
@@ -12,7 +10,7 @@ fetch('http://localhost:3000/api/teddies')
 	}
 })
 .then (function (arrayAllProducts) {
-
+	/* Appel de la fonction qui met à jour la quantité du panier */
 	displayQuantityInCart();
 
 	/* Appel de la fonction qui crée une div produit */
@@ -51,8 +49,8 @@ function insertNewProduct(array) {
 		document.getElementById('homepage').appendChild(newDivProduct);
 	})
 };
-/***** Fonction qui ajoute une balise a *****/
 
+/***** Fonction qui ajoute une balise a *****/
 function addLinkToProduct(teddies) {
 	const link = document.createElement("a");
 	link.setAttribute("href", "product.html?id="+teddies._id);
@@ -71,7 +69,6 @@ function addImageToProduct(teddies) {
 }
 
 /****** Fonction qui ajoute la description *****/
-
 function addDescriptionToProduct(teddies) {
 	const divDescription = document.createElement("div");
 	divDescription.classList.add("description__text");
@@ -89,13 +86,3 @@ function addDescriptionToProduct(teddies) {
 
 	return divDescription;
 }
-
-
-function displayQuantityInCart() {
-	let quantity = JSON.parse(localStorage.getItem('cart'));
-	if (quantity === null) {
-		NumberArticles.innerText = 0;
-	}else {
-		NumberArticles.innerText = quantity.length;
-	}
-};
