@@ -63,7 +63,7 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
         addBaseChoice();
 
         /* Ajout des couleurs dans le select */
-        product.colors.forEach(option => {
+            product.colors.forEach(option => {
             newchoice = addOptionToSelect(option);
             document.getElementById('colorsChoices').appendChild(newchoice);
         });

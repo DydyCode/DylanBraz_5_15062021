@@ -1,4 +1,5 @@
 
+
 /***** Pointage des éléments sur le DOM *****/
 const container = document.getElementById("containerCart");
 const containerForm = document.getElementById("containerForm");
@@ -30,12 +31,12 @@ if (productsInCart === null) {
         <span id="firstNameMissing"></span>
 
         <label for="name" > Entrez votre Nom :</label>
-        <input type="text" name="name" id="name" required="required" maxlength="20">
-        <span id="nameMissing"></span>
+        <input type="text" name="lastName" id="lastName" required="required" maxlength="20">
+        <span id="lastNameMissing"></span>
 
-        <label for="tel" > Entrez votre numéro de téléphone :</label>
-        <input type="tel" name="tel" id="tel" required="required">
-        <span id="telMissing"></span>
+        <label for="tel" > Entrez votre adresse :</label>
+        <input type="adress" name="adress" id="adress" required="required">
+        <span id="adressMissing"></span>
         
         <label for="postal" > Entrez votre code postal :</label>
         <input type="postal" name="postal" id="postal" required="required">
@@ -45,12 +46,12 @@ if (productsInCart === null) {
         <input type="email" name="mail" id="mail" required="required">
         <span id="mailMissing"></span>
 
-        <input type="submit" value="Valider ma commande" id="validateOrderBtn">
+        <input  value="Valider ma commande" id="validateOrderBtn">
     </form>
     `
 }
 
-
+// type="submit"
 /***** Fonction qui crée la div de produit *****/
 
 function createDiv(productsInCart) {
@@ -65,11 +66,11 @@ function createDiv(productsInCart) {
     /* Appel de la fonction qui crée une balise p pour le nom du produit */
     const name = createName(productsInCart);
 
-    /* Appel de la fonction qui crée une balise p pour le prix */
-    const price = createPrice(productsInCart);
-
     /* Appel de la fonction qui crée un p pour la couleur selectionnée */
     const colorSelected = createColorSelected(productsInCart);
+
+     /* Appel de la fonction qui crée une balise p pour le prix */
+     const price = createPrice(productsInCart);
 
     /* Appel de la fonction qui crée un bouton supprimer */
     // const deletBtn = createDeleteBtn(productsInCart);
@@ -77,8 +78,8 @@ function createDiv(productsInCart) {
     /* Montage de la div */
     containerProductCart.appendChild(image);
     containerProductCart.appendChild(name);
-    containerProductCart.appendChild(price);
     containerProductCart.appendChild(colorSelected);
+    containerProductCart.appendChild(price);
     // containerProductCart.appendChild(deletBtn);
 
     /* Ajout de la div dans le DOM */
@@ -172,7 +173,6 @@ totalDiv.innerText = "Total à payer : " + totalOder + "€";
 /***** Les REGEX *****/
 
 let nameValidation = /^[a-zA-ZéèîïÉÈÎÏÜÛ][a-zéèêàçîï]+([' -][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
-let telValidation = /^\d{10}$/;
 let postalValidation = /^\d{5}$/;
 let mailValidation = /^/;
 
@@ -182,10 +182,11 @@ const validateOrderBtn = document.getElementById('validateOrderBtn');
 /***** Event sur le bouton "valider la commande" *****/
 validateOrderBtn.addEventListener('click',(e) => {
     firstNameIsValid(e);
-    nameIsValid(e);
-    telIsValid(e);
+    lastNameIsValid(e);
+    adressIsValid(e);
     postalIsValid(e);
     mailIsValid(e);
+    sendData();
 } );
 
 /***** Fonction qui test l'input du prénom ******/
@@ -209,42 +210,42 @@ function firstNameIsValid(e) {
 }
 
 /***** Fonction qui test l'input du nom *****/
-function nameIsValid(e) {
+function lastNameIsValid(e) {
         /* Pointage des éléments sur le DOM */
-    let nameUser = document.getElementById('name');
-    let nameMissing = document.getElementById('nameMissing');
+    let lastNameUser = document.getElementById('lastName');
+    let lastNameMissing = document.getElementById('lastNameMissing');
     
     /* Test si l'utilisateur a rempli l'input */
-    if (nameUser.validity.valueMissing) {
+    if (lastNameUser.validity.valueMissing) {
         e.preventDefault();
-        nameMissing.textContent = "Nom manquant";
-        nameMissing.style.color = "red";
+        lastNameMissing.textContent = "Nom manquant";
+        lastNameMissing.style.color = "red";
 
         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-    }else if (nameValidation.test(nameUser.value) == false) {
+    }else if (nameValidation.test(lastNameUser.value) == false) {
         e.preventDefault();
-        nameMissing.textContent = "Format incorrect";
-        nameMissing.style.color = "red";
+        lastNameMissing.textContent = "Format incorrect";
+        lastNameMissing.style.color = "red";
     }
 }
 
-/***** Fonction qui test l'input du numéro de téléphone *****/
-function telIsValid(e) {
+/***** Fonction qui test l'input de l'adresse *****/
+function adressIsValid(e) {
          /* Pointage des éléments sur le DOM */
-         let tel = document.getElementById('tel');
-         let telMissing = document.getElementById('telMissing');
+         let adress = document.getElementById('adress');
+         let adressMissing = document.getElementById('adressMissing');
          
          /* Test si l'utilisateur a rempli l'input */
-         if (tel.validity.valueMissing) {
+         if (adress.validity.valueMissing) {
              e.preventDefault();
-             telMissing.textContent = "Prénom manquant";
-             telMissing.style.color = "red";
+             adressMissing.textContent = "Adresse manquante";
+             adressMissing.style.color = "red";
      
              /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-         }else if (telValidation.test(tel.value) == false) {
+         }else if (nameValidation.test(adress.value) == false) {
              e.preventDefault();
-             telMissing.textContent = "Format incorrect";
-             telMissing.style.color = "red";
+             adressMissing.textContent = "Format incorrect";
+             adressMissing.style.color = "red";
          }
 }
 
@@ -287,4 +288,52 @@ function mailIsValid(e) {
         mailMissing.style.color = "red";
     }
 }
+/***** Envoi des données à l'API *****/
+function sendData() {
+    /***** Récupération des donées du formulaire *****/
 
+    /* Pointage des éléments sur le DOM */
+    let firstName = document.getElementById('firstName').value;
+    let lastName = document.getElementById('lastName').value;
+    let adress = document.getElementById('adress').value;
+    let city = document.getElementById('postal').value;
+    let email = document.getElementById('mail').value;
+    
+    /* Création de l'objet user qui stock toutes les valeurs des input */
+    let user = {
+        'firstName': firstName,
+        'lastName': lastName,
+        'adress': adress,
+        'city': city,
+        'email': email
+    }
+
+    var listIdInCart = [];
+    /* Boucle qui va récupérer tout les id des produits dans le panier */
+    for (let i =0; i < productsInCart.length; i++) {
+        let IdInCart = productsInCart[i];
+        listIdInCart.push(IdInCart._id);
+    }
+    
+    /* Fusion des ID de produits et le contact du formulaire en un seul objet */
+    var products = listIdInCart;
+    var contact = user;
+    var data = JSON.stringify({products , contact})
+    console.log(data);
+
+    /* Envois des donées a l'API */
+    fetch('http://localhost:3000/api/teddies/order', {
+    method : 'POST', 
+    headers : {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: data
+    })
+    .then(function (res) {
+        console.log(res);
+    })
+    .catch(function (err) {
+        console.log(err);
+    })
+}

@@ -202,9 +202,10 @@ footer ul {
     display: flex;
 }
 #totalOrder {
-    display: block;
-    margin: auto;
     margin-bottom: 2rem;
+    margin-right: 12rem;
+    display: flex;
+    justify-content: flex-end;
 }
 #containerCart {
     display: flex;
