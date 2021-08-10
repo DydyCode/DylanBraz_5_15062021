@@ -1,0 +1,72 @@
+/***** Header *****/
+nav {
+  background-color: #f3e9f1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px 10px 10px 10px;
+}
+
+nav ul {
+  margin-top: 2.6rem;
+}
+
+nav li {
+  list-style: none;
+}
+
+nav li a {
+  padding: 5px;
+  background-color: #8f5bfe;
+  text-decoration: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/***** Footer *****/
+footer {
+  margin-top: 3rem;
+  background: #f3e9f1;
+}
+
+footer ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+footer a {
+  background-color: initial;
+}
+
+/***** Class de style communes *****/
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.textRed {
+  color: red;
+}
+
+.textGreen {
+  color: green;
+}
+/*# sourceMappingURL=commun.css.map */

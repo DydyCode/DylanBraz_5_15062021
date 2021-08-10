@@ -1,0 +1,37 @@
+#containerConfirmedOrder {
+  text-align: center;
+}
+
+#containerConfirmedOrder #titleConfirmedOrder {
+  margin-bottom: 1rem;
+}
+
+#containerConfirmedOrder #numberOrder {
+  margin-top: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-bottom: 1rem;
+}
+
+.displayGrid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 33% 33% 33%;
+      grid-template-columns: 33% 33% 33%;
+}
+
+.displayGrid p {
+  border: solid 1px #f3e9f1;
+  text-align: center;
+}
+
+.displayGrid .imageOfProduct {
+  width: 100px;
+  margin: auto;
+}
+
+.displayGrid #pEmpty {
+  border: none;
+}
+/*# sourceMappingURL=confirmedOrder.css.map */

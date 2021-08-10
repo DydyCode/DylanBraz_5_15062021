@@ -1,11 +1,9 @@
-
-
-/***** Pointage des éléments sur le DOM *****/
+/********************** Pointage des éléments sur le DOM **********************/
 const container = document.getElementById("containerCart");
 const containerForm = document.getElementById("containerForm");
 const clearCartBtn = document.getElementById("clearCartBtn");
 
-/* Récupération des produits dans le local storage */
+/****************** Récupération des produits dans le local storage ****************/
 let productsInCart = JSON.parse(localStorage.getItem("cart"));
 
 /***** Test si le panier est vide *****/
@@ -51,9 +49,7 @@ if (productsInCart === null) {
     `
 }
 
-// type="submit"
-/***** Fonction qui crée la div de produit *****/
-
+/***** Fonction qui crée la div du produit *****/
 function createDiv(productsInCart) {
 
     /* Création d'une div container des produits */
@@ -72,15 +68,11 @@ function createDiv(productsInCart) {
      /* Appel de la fonction qui crée une balise p pour le prix */
      const price = createPrice(productsInCart);
 
-    /* Appel de la fonction qui crée un bouton supprimer */
-    // const deletBtn = createDeleteBtn(productsInCart);
-
     /* Montage de la div */
     containerProductCart.appendChild(image);
     containerProductCart.appendChild(name);
     containerProductCart.appendChild(colorSelected);
     containerProductCart.appendChild(price);
-    // containerProductCart.appendChild(deletBtn);
 
     /* Ajout de la div dans le DOM */
     document.getElementById("containerCart").appendChild(containerProductCart)
@@ -133,15 +125,6 @@ function createPforTotal() {
 
 const prixtotalapayer = createPforTotal();
 container.appendChild(prixtotalapayer);
-
-/***** Fonction qui crée un boutton supprimer *****/
-// function createDeleteBtn() {
-//     const deleteBtn = document.createElement('button');
-//     deleteBtn.classList.add("deleteBtn");
-//     deleteBtn.innerText = "Supprimer";
-
-//     return deleteBtn;
-// }
 
 /*****  Boutton qui vide le panier *****/
 clearCartBtn.addEventListener("click", () => {
@@ -240,12 +223,6 @@ function adressIsValid(e) {
              e.preventDefault();
              adressMissing.textContent = "Adresse manquante";
              adressMissing.style.color = "red";
-     
-             /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-         }else if (nameValidation.test(adress.value) == false) {
-             e.preventDefault();
-             adressMissing.textContent = "Format incorrect";
-             adressMissing.style.color = "red";
          }
 }
 
@@ -295,7 +272,7 @@ function sendData() {
     /* Pointage des éléments sur le DOM */
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
-    let adress = document.getElementById('adress').value;
+    let address = document.getElementById('adress').value;
     let city = document.getElementById('postal').value;
     let email = document.getElementById('mail').value;
     
@@ -303,7 +280,7 @@ function sendData() {
     let user = {
         'firstName': firstName,
         'lastName': lastName,
-        'adress': adress,
+        'address': address,
         'city': city,
         'email': email
     }
@@ -318,8 +295,9 @@ function sendData() {
     /* Fusion des ID de produits et le contact du formulaire en un seul objet */
     var products = listIdInCart;
     var contact = user;
-    var data = JSON.stringify({products , contact})
-    console.log(data);
+    var data = JSON.stringify({products , contact});
+    // console.log(data);
+
 
     /* Envois des donées a l'API */
     fetch('http://localhost:3000/api/teddies/order', {
@@ -330,9 +308,16 @@ function sendData() {
     },
     body: data
     })
-    .then(function (res) {
-        console.log(res);
+    .then(res => {
+        if (res.ok){
+            return res.json();
+        }
     })
+    .then (info => {
+        localStorage.setItem('info', JSON.stringify(info));
+        window.location.href=`confirmedOrder.html?orderId=${info.orderId}`   
+     })
+
     .catch(function (err) {
         console.log(err);
     })

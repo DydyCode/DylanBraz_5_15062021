@@ -1,0 +1,29 @@
+@import "utils.scss";
+
+#containerConfirmedOrder {
+    text-align: center;
+    #titleConfirmedOrder {
+        margin-bottom: 1rem;
+    }
+    #numberOrder {
+        margin-top: 1rem;
+        display: flex;
+        padding-bottom: 1rem;
+    
+    }
+}
+.displayGrid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    p {
+    border: solid 1px #f3e9f1; 
+    text-align: center;
+    }
+    .imageOfProduct {
+        width: 100px;
+        margin: auto;
+    }
+    #pEmpty {
+        border: none;
+    }
+}

@@ -1,0 +1,30 @@
+@import "utils.scss";
+
+/***** Index *****/
+
+#homepage {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.containerProduct {
+    display: block;
+    margin: auto;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    background-color: rgb(241, 241, 241);
+    box-shadow: -1px -1px 8px rgba(187, 187, 187, 0.8);
+    img {
+        width: 500px;
+        border-radius: 10px;
+    }
+
+}
+.containerProduct , .description__text {
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom : 1rem;
+}
+
+

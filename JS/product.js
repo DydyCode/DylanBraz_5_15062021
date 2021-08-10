@@ -12,9 +12,12 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
             return product.json();
         }
     })
+    .catch (function(err) {
+        console.log(err);
+    })
     .then(function (product) {
 
-        /* Appel de la fonction qui affich et met à jour le nombre d'article dans le panier */
+        /* Appel de la fonction qui affiche et met à jour le nombre d'article dans le panier */
         displayQuantityInCart();
 
         localStorage.setItem('currentProduct', JSON.stringify(product));
@@ -37,7 +40,7 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                 <select id="colorsChoices">
                 </select action="cart.html">
                 </form>
-                    <p id="hidden">
+                    <p id="choiceMessage">
                     
                     </p>
                     <button id="addToCartButton">
@@ -45,16 +48,15 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                     </button>
     </div>
     `
-        /* Ajout d'une option dans le tableau couleurs */
-        let choice = "Choisissez une couleur";
-        product.colorBaseChoice = choice;
 
         /* Fonction qui crée une option "choisissez une couleur et la séléctionne" */
         function addBaseChoice() {
             let baseChoice = document.createElement("option");
             baseChoice.setAttribute("selected", "selected");
-            baseChoice.textContent = choice;
-
+            baseChoice.setAttribute("id", "baseChoice");
+            baseChoice.value = "";
+            baseChoice.textContent = "Choissisez une couleur";
+            
             document.getElementById('colorsChoices').appendChild(baseChoice);
             return baseChoice;
         }
@@ -73,14 +75,18 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
 
         /* event sur le bouton ajouter au panier */
         btnAddToCart.addEventListener("click", () => {
-            if (document.getElementById('colorsChoices').value === choice) {
-                const compulsorychoice = document.getElementById("hidden");
-                compulsorychoice.classList.add("textRed");
+            if (document.getElementById('colorsChoices').value === "") {
+                const compulsorychoice = document.getElementById("choiceMessage");
+                compulsorychoice.classList.add("textRed"); 
+                compulsorychoice.classList.remove("textGreen");
+                /* autre méthode que add */
+                /*modifier le nom de compulsory */
                 compulsorychoice.innerText = "Veuillez choisir une couleur"
                 compulsorychoice.style = "visibility : visible"
             }else {
-                const compulsorychoice = document.getElementById("hidden");
+                const compulsorychoice = document.getElementById("choiceMessage");
                 compulsorychoice.classList.add("textGreen");
+                compulsorychoice.classList.remove("textRed");
                 compulsorychoice.innerText = "Article ajoué au panier"
                 compulsorychoice.style = "visibility : visible";
                 saveProductInCart(JSON.parse(localStorage.getItem('currentProduct')));
@@ -89,6 +95,7 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
             }
         });
     });
+  
 
 /***** Fonction qui créé qui une nouvelle 'option' et qui l'ajoute  *****/
 

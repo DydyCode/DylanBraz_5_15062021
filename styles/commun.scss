@@ -1,0 +1,57 @@
+@import "utils.scss";
+
+/***** Header *****/
+nav {
+    background-color: $color1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 10px 10px 10px;
+    ul {
+        margin-top: 2.6rem;
+    }
+    li {
+        a {
+            padding: 5px;
+            background-color: $color2;
+            text-decoration: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+        }  
+        list-style: none;
+    }
+}
+
+/***** Footer *****/
+
+footer {
+    margin-top: 3rem;
+    background: #f3e9f1;
+    ul {
+        display: flex;
+    }
+    a {
+        background-color: initial;
+    }
+}
+
+/***** Class de style communes *****/
+.flex {
+    display: flex;
+}
+.bold {
+    font-weight: bold;
+}
+.textRed {
+    color: red;
+}
+.textGreen {
+    color: green;
+}
