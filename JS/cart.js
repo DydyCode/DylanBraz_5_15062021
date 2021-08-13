@@ -49,40 +49,12 @@ if (productsInCart === null) {
     `
 }
 
-/***** Fonction qui crée la div du produit *****/
-function createDiv(productsInCart) {
-
-    /* Création d'une div container des produits */
-    const containerProductCart = document.createElement("div");
-    containerProductCart.classList.add("containerProductCart");
-
-    /* Appel de la fonction qui crée une balise img */
-    const image = createimg(productsInCart);
-
-    /* Appel de la fonction qui crée une balise p pour le nom du produit */
-    const name = createName(productsInCart);
-
-    /* Appel de la fonction qui crée un p pour la couleur selectionnée */
-    const colorSelected = createColorSelected(productsInCart);
-
-     /* Appel de la fonction qui crée une balise p pour le prix */
-     const price = createPrice(productsInCart);
-
-    /* Montage de la div */
-    containerProductCart.appendChild(image);
-    containerProductCart.appendChild(name);
-    containerProductCart.appendChild(colorSelected);
-    containerProductCart.appendChild(price);
-
-    /* Ajout de la div dans le DOM */
-    document.getElementById("containerCart").appendChild(containerProductCart)
-};
-
 /***** Fonction qui crée une balise image *****/
 function createimg(productsInCart) {
     const imageFigure = document.createElement("figure");
     const image = document.createElement("img");
     image.setAttribute("src", productsInCart.imageUrl);
+    image.classList.add('imgProduct');
     imageFigure.appendChild(image);
 
     return image;
@@ -126,6 +98,35 @@ function createPforTotal() {
 const prixtotalapayer = createPforTotal();
 container.appendChild(prixtotalapayer);
 
+/***** Fonction qui crée la div du produit *****/
+function createDiv(productsInCart) {
+
+    /* Création d'une div container des produits */
+    const containerProductCart = document.createElement("div");
+    containerProductCart.classList.add("containerProductCart");
+
+    /* Appel de la fonction qui crée une balise img */
+    const image = createimg(productsInCart);
+
+    /* Appel de la fonction qui crée une balise p pour le nom du produit */
+    const name = createName(productsInCart);
+
+    /* Appel de la fonction qui crée un p pour la couleur selectionnée */
+    const colorSelected = createColorSelected(productsInCart);
+
+    /* Appel de la fonction qui crée une balise p pour le prix */
+    const price = createPrice(productsInCart);
+
+    /* Montage de la div */
+    containerProductCart.appendChild(image);
+    containerProductCart.appendChild(name);
+    containerProductCart.appendChild(colorSelected);
+    containerProductCart.appendChild(price);
+
+    /* Ajout de la div dans le DOM */
+    document.getElementById("containerCart").appendChild(containerProductCart)
+};
+
 /*****  Boutton qui vide le panier *****/
 clearCartBtn.addEventListener("click", () => {
     localStorage.clear();
@@ -135,17 +136,17 @@ clearCartBtn.addEventListener("click", () => {
 /**************************** Le montant total du panier ****************************/
 
 /* variable vide pour stocker tout les prix dans le localStorage */
-let prixOfProducts = [];
+let priceOfProducts = [];
 
 /* Boucle qui va cherchez les prix dans le LocalStorage et les stock dans la variable */
 for (let i = 0; i < productsInCart.length; i++) {
     let prix = productsInCart[i].price;
-    prixOfProducts.push(prix);
+    priceOfProducts.push(prix);
 }
 
 /* Méthode reduce() pour additionner tout les prix */
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
-let totalOder = (prixOfProducts.reduce(reducer) / 100).toFixed(2);
+let totalOder = (priceOfProducts.reduce(reducer) / 100).toFixed(2);
 
 /* Affichage du prix total à payer */
 const totalDiv = document.getElementById('totalOrder');
@@ -157,20 +158,8 @@ totalDiv.innerText = "Total à payer : " + totalOder + "€";
 
 let nameValidation = /^[a-zA-ZéèîïÉÈÎÏÜÛ][a-zéèêàçîï]+([' -][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?/;
 let postalValidation = /^\d{5}$/;
-let mailValidation = /^/;
+let mailValidation = new RegExp("^[A-Za-z0-9-_.]+@[a-z]{3,}[.][a-z]{2,4}$");
 
-/***** Pointage du buton "valider la commande" sur le DOM *****/
-const validateOrderBtn = document.getElementById('validateOrderBtn');
-
-/***** Event sur le bouton "valider la commande" *****/
-validateOrderBtn.addEventListener('click',(e) => {
-    firstNameIsValid(e);
-    lastNameIsValid(e);
-    adressIsValid(e);
-    postalIsValid(e);
-    mailIsValid(e);
-    sendData();
-} );
 
 /***** Fonction qui test l'input du prénom ******/
 function firstNameIsValid(e) {
@@ -185,19 +174,21 @@ function firstNameIsValid(e) {
         firstNameMissing.style.color = "red";
 
         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-    }else if (nameValidation.test(firstName.value) == false) {
+    } else if (nameValidation.test(firstName.value) == false) {
         e.preventDefault();
         firstNameMissing.textContent = "Format incorrect";
         firstNameMissing.style.color = "red";
+    } else {
+        return true
     }
 }
 
 /***** Fonction qui test l'input du nom *****/
 function lastNameIsValid(e) {
-        /* Pointage des éléments sur le DOM */
+    /* Pointage des éléments sur le DOM */
     let lastNameUser = document.getElementById('lastName');
     let lastNameMissing = document.getElementById('lastNameMissing');
-    
+
     /* Test si l'utilisateur a rempli l'input */
     if (lastNameUser.validity.valueMissing) {
         e.preventDefault();
@@ -205,30 +196,34 @@ function lastNameIsValid(e) {
         lastNameMissing.style.color = "red";
 
         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-    }else if (nameValidation.test(lastNameUser.value) == false) {
+    } else if (nameValidation.test(lastNameUser.value) == false) {
         e.preventDefault();
         lastNameMissing.textContent = "Format incorrect";
         lastNameMissing.style.color = "red";
+    }else {
+        return true
     }
 }
 
 /***** Fonction qui test l'input de l'adresse *****/
 function adressIsValid(e) {
-         /* Pointage des éléments sur le DOM */
-         let adress = document.getElementById('adress');
-         let adressMissing = document.getElementById('adressMissing');
-         
-         /* Test si l'utilisateur a rempli l'input */
-         if (adress.validity.valueMissing) {
-             e.preventDefault();
-             adressMissing.textContent = "Adresse manquante";
-             adressMissing.style.color = "red";
-         }
+    /* Pointage des éléments sur le DOM */
+    let adress = document.getElementById('adress');
+    let adressMissing = document.getElementById('adressMissing');
+
+    /* Test si l'utilisateur a rempli l'input */
+    if (adress.validity.valueMissing) {
+        e.preventDefault();
+        adressMissing.textContent = "Adresse manquante";
+        adressMissing.style.color = "red";
+    } else {
+        return true
+    }
 }
 
 /***** Fonction qui test l'input code postal *****/
 function postalIsValid(e) {
-      /* Pointage des éléments sur le DOM */
+    /* Pointage des éléments sur le DOM */
     let postal = document.getElementById('postal');
     let postalMissing = document.getElementById('postalMissing');
 
@@ -239,10 +234,12 @@ function postalIsValid(e) {
         postalMissing.style.color = "red";
 
         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-    }else if (postalValidation.test(postal.value) == false) {
+    } else if (postalValidation.test(postal.value) == false) {
         e.preventDefault();
         postalMissing.textContent = "Format incorrect";
         postalMissing.style.color = "red";
+    }else {
+        return true
     }
 }
 
@@ -252,17 +249,19 @@ function mailIsValid(e) {
     let mail = document.getElementById('mail');
     let mailMissing = document.getElementById('mailMissing');
 
-      /* Test si l'utilisateur a rempli l'input */
-      if (mail.validity.valueMissing) {
+    /* Test si l'utilisateur a rempli l'input */
+    if (mail.validity.valueMissing) {
         e.preventDefault();
         mailMissing.textContent = "Adresse mail manquante";
         mailMissing.style.color = "red";
 
         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-    }else if (mailValidation.test(mail.value) == false) {
+    } else if (mailValidation.test(mail.value) == false) {
         e.preventDefault();
         mailMissing.textContent = "Format incorrect";
         mailMissing.style.color = "red";
+    }else {
+        return true
     }
 }
 /***** Envoi des données à l'API *****/
@@ -275,7 +274,7 @@ function sendData() {
     let address = document.getElementById('adress').value;
     let city = document.getElementById('postal').value;
     let email = document.getElementById('mail').value;
-    
+
     /* Création de l'objet user qui stock toutes les valeurs des input */
     let user = {
         'firstName': firstName,
@@ -287,38 +286,53 @@ function sendData() {
 
     var listIdInCart = [];
     /* Boucle qui va récupérer tout les id des produits dans le panier */
-    for (let i =0; i < productsInCart.length; i++) {
+    for (let i = 0; i < productsInCart.length; i++) {
         let IdInCart = productsInCart[i];
         listIdInCart.push(IdInCart._id);
     }
-    
+
     /* Fusion des ID de produits et le contact du formulaire en un seul objet */
     var products = listIdInCart;
     var contact = user;
-    var data = JSON.stringify({products , contact});
+    var data = JSON.stringify({ products, contact });
     // console.log(data);
-
 
     /* Envois des donées a l'API */
     fetch('http://localhost:3000/api/teddies/order', {
-    method : 'POST', 
-    headers : {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: data
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: data
     })
-    .then(res => {
-        if (res.ok){
-            return res.json();
-        }
-    })
-    .then (info => {
-        localStorage.setItem('info', JSON.stringify(info));
-        window.location.href=`confirmedOrder.html?orderId=${info.orderId}`   
-     })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+        })
+        .then(info => {
+            localStorage.setItem('info', JSON.stringify(info));
+        })
 
-    .catch(function (err) {
-        console.log(err);
-    })
+        .catch(function (err) {
+            console.log(err);;
+        })
+
 }
+
+
+function validForm(e) {
+   return firstNameIsValid(e) && lastNameIsValid(e) && adressIsValid(e) && postalIsValid(e) && mailIsValid(e);
+}
+/***** Pointage du buton "valider la commande" sur le DOM *****/
+const validateOrderBtn = document.getElementById('validateOrderBtn');
+
+/***** Event sur le bouton "valider la commande" *****/
+validateOrderBtn.addEventListener('click', (e) => {
+        validForm(e);
+        sendData();
+        let info = JSON.parse(localStorage.getItem("info"));
+        window.location.href = `confirmedOrder.html?orderId=${info.orderId}`
+});
+

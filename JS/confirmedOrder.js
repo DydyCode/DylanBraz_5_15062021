@@ -27,15 +27,8 @@ createThanks();
 createTemplate();
 displayTotalOrder();
 
-/* Boucle qui crée une balise img et deux balises p, par produits acheté */
-for (let i =0; i < products.length; i++) {
-    createImageOfProduct(products[i]);
-    createNameOfProduct(products[i]);
-    createPriceOfProduct(products[i]);
-}
-
 /* Fonction qui crée une balise h1 */
-    function createTitle() {
+    function createTitle() { 
     const title = document.createElement('h1');
     title.setAttribute("id", "titleConfirmedOrder");
     title.textContent = "Votre commande a été validé !";
@@ -132,7 +125,12 @@ function displayTotalOrder() {
 
     return containerTotalPrice;
 }
-
+/* Boucle qui crée une balise img et deux balises p, par produits acheté */
+for (let i =0; i < products.length; i++) {
+    createImageOfProduct(products[i]);
+    createNameOfProduct(products[i]);
+    createPriceOfProduct(products[i]);
+}
 /* Fonction qui attend 5secondes avant de vider le localStorage */
 function waitToExecute()
 {
@@ -142,4 +140,5 @@ function clearLocalStorage()
 {
     localStorage.clear();
 }
+
 waitToExecute();

@@ -19,8 +19,8 @@ fetch('http://localhost:3000/api/teddies')
 })
 
 /***** catch qui permet de stocker les érreurs et les affichez dans la console *****/
-.catch (function(err) {
-	console.log(err);
+.catch (function() {
+	window.location.href="error.html";
 })
 
 /***** Fonction qui "monte" la div *****/

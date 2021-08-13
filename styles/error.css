@@ -1,0 +1,47 @@
+#homepage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#homepage #containerText {
+  display: block;
+  margin: auto;
+  margin-top: 5rem;
+}
+
+#homepage #containerText h1 {
+  font-size: 80px;
+}
+
+#homepage #containerBtn {
+  display: block;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+#homepage button {
+  padding: 10px;
+  background-color: #8f5bfe;
+  border: none;
+  border-radius: 20px;
+  margin: 1rem;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#containerBackground {
+  display: block;
+  margin: auto;
+}
+
+#containerBackground h3 {
+  font-size: 200px;
+  color: #f3f3f3;
+}
+/*# sourceMappingURL=error.css.map */

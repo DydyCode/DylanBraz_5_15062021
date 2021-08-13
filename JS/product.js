@@ -21,7 +21,6 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
         displayQuantityInCart();
 
         localStorage.setItem('currentProduct', JSON.stringify(product));
-        console.log(product);
 
         productpage.innerHTML =
             `
@@ -95,7 +94,6 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
             }
         });
     });
-  
 
 /***** Fonction qui créé qui une nouvelle 'option' et qui l'ajoute  *****/
 
