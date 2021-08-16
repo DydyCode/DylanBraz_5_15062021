@@ -4,6 +4,11 @@
 
 
 #containerCart { 
+    #containerCartEmpty {
+        h2 {
+            text-align: center;
+        }
+    }
     .containerProductCart {
         display: grid;
         grid-template-columns: 25% 25% 25% 25%;

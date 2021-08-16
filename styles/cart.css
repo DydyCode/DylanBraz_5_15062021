@@ -1,4 +1,8 @@
 /***** Cart *****/
+#containerCart #containerCartEmpty h2 {
+  text-align: center;
+}
+
 #containerCart .containerProductCart {
   display: -ms-grid;
   display: grid;
