@@ -12,8 +12,8 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
             return product.json();
         }
     })
-    .catch (function(err) {
-        console.log(err);
+    .catch (function() {
+        window.location.href="error.html";
     })
     .then(function (product) {
 
