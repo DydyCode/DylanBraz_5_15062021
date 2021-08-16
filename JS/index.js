@@ -1,5 +1,4 @@
 /***** Pointage des éléments sur le DOM *****/
-const containerTeddies = document.getElementById("teddiesGeneralContainer");
 const NumberArticles = document.getElementById("NumberArticles");
 
 /***** Le fetch *****/
@@ -18,7 +17,7 @@ fetch('http://localhost:3000/api/teddies')
 
 })
 
-/***** catch qui permet de stocker les érreurs et les affichez dans la console *****/
+/***** catch qui permet de renvoyer vers la page d'erreur *****/
 .catch (function() {
 	window.location.href="error.html";
 })
