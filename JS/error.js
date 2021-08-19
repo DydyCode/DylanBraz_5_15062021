@@ -41,11 +41,13 @@ function displayBackground() {
 
     return containerBackground;
 }
+
+/***** Appel des fonctions *****/
 displayText();
 displayBtn();
 displayBackground();
-/***** EventListenner sur le boutton *****/
 
+/***** EventListenner sur le boutton *****/
 document.getElementById('btnToBack').addEventListener('click', () => {
     window.location.href="index.html" ; 
 })
