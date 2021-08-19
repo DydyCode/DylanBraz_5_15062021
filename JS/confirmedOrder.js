@@ -63,6 +63,35 @@ function createTemplate() {
     return grid;
 }
 
+/* Fonction qui crée une ligne dans le tableau pour afficher le prix total de la commande */
+function displayTotalOrder() {
+    /* création d'une div en display grid */
+    const containerTotalPrice = document.createElement('div');
+    containerTotalPrice.classList.add('displayGrid');
+    containerTotalPrice.setAttribute('id', 'containerTotalPrice');
+    document.getElementById('containerConfirmedOrder').appendChild(containerTotalPrice);
+
+    /* création d'une balise p qui  reste vide */
+    const pEmpty = document.createElement('p');
+    pEmpty.setAttribute('id', 'pEmpty');
+    containerTotalPrice.appendChild(pEmpty);
+
+    /* création d'une balise p qui contient "total" */
+    const titleTotalPrice = document.createElement('p');
+    titleTotalPrice.classList.add('bold');
+    titleTotalPrice.textContent = "Total";
+    containerTotalPrice.appendChild(titleTotalPrice);
+
+    /* création d'une balise p qui contient le prix total de la commande */
+    const totalPrice = document.createElement('p');
+    totalPrice.classList.add('bold');
+    totalPrice.setAttribute('id', 'totalPrice');
+    containerTotalPrice.appendChild(totalPrice);
+    totalPrice.textContent = totalOrder+"€";
+
+    return containerTotalPrice;
+}
+
 /* Fonction qui crée une balise img pour l'image du produit*/
 function createImageOfProduct(products) {
 
@@ -97,34 +126,6 @@ function createPriceOfProduct(products) {
     return price
 }
 
-/* Fonction qui crée une ligne dans le tableau pour afficher le prix total de la commande */
-function displayTotalOrder() {
-    /* création d'une div en display grid */
-    const containerTotalPrice = document.createElement('div');
-    containerTotalPrice.classList.add('displayGrid');
-    containerTotalPrice.setAttribute('id', 'containerTotalPrice');
-    document.getElementById('containerConfirmedOrder').appendChild(containerTotalPrice);
-
-    /* création d'une balise p qui  reste vide */
-    const pEmpty = document.createElement('p');
-    pEmpty.setAttribute('id', 'pEmpty');
-    containerTotalPrice.appendChild(pEmpty);
-
-    /* création d'une balise p qui contient "total" */
-    const titleTotalPrice = document.createElement('p');
-    titleTotalPrice.classList.add('bold');
-    titleTotalPrice.textContent = "Total";
-    containerTotalPrice.appendChild(titleTotalPrice);
-
-    /* création d'une balise p qui contient le prix total de la commande */
-    const totalPrice = document.createElement('p');
-    totalPrice.classList.add('bold');
-    totalPrice.setAttribute('id', 'totalPrice');
-    containerTotalPrice.appendChild(totalPrice);
-    totalPrice.textContent = totalOrder+"€";
-
-    return containerTotalPrice;
-}
 /* Boucle qui crée une balise img et deux balises p, par produits acheté */
 for (let i =0; i < products.length; i++) {
     createImageOfProduct(products[i]);
