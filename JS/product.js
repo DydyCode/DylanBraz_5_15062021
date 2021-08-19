@@ -12,6 +12,7 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
             return product.json();
         }
     })
+    /* Redirection vers la page d'érreur */
     .catch (function() {
         window.location.href="error.html";
     })
@@ -20,33 +21,32 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
         /* Appel de la fonction qui affiche et met à jour le nombre d'article dans le panier */
         displayQuantityInCart();
 
+        /* Ajout du produit dans le localStorage */
         localStorage.setItem('currentProduct', JSON.stringify(product));
 
         productpage.innerHTML =
             `
-    <img class="imageProduct" src="${product.imageUrl}" width="700">
-    <div class="product">
-            <h2>
-                ${product.name}
-            </h2>
-                    <p>
-                    ${(product.price / 100).toFixed(2)}€
-                    </p>
-                <p class="descriptionProduct">
-                    ${product.description}
-                </p>
-                <form>
-                <select id="colorsChoices">
-                </select action="cart.html">
-                </form>
-                    <p id="choiceMessage">
-                    
-                    </p>
-                    <button id="addToCartButton">
-                        Ajouter au panier
-                    </button>
-    </div>
-    `
+                <img class="imageProduct" src="${product.imageUrl}" width="700">
+                <div class="product">
+                    <h2>
+                        ${product.name}
+                    </h2>
+                        <p>
+                            ${(product.price / 100).toFixed(2)}€
+                        </p>
+                        <p class="descriptionProduct">
+                            ${product.description}
+                        </p>
+                    <form>
+                        <select id="colorsChoices">
+                        </select action="cart.html">
+                    </form>
+                        <p id="choiceMessage"></p>
+                        <button id="addToCartButton">
+                            Ajouter au panier
+                        </button>
+                </div>
+            `
 
         /* Fonction qui crée une option "choisissez une couleur et la séléctionne" */
         function addBaseChoice() {
@@ -75,21 +75,20 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
         /* event sur le bouton ajouter au panier */
         btnAddToCart.addEventListener("click", () => {
             if (document.getElementById('colorsChoices').value === "") {
-                const compulsorychoice = document.getElementById("choiceMessage");
-                compulsorychoice.classList.add("textRed"); 
-                compulsorychoice.classList.remove("textGreen");
-                /* autre méthode que add */
+                const choiceRequired = document.getElementById("choiceMessage");
+                choiceRequired.classList.add("textRed"); 
+                choiceRequired.classList.remove("textGreen");
                 /*modifier le nom de compulsory */
-                compulsorychoice.innerText = "Veuillez choisir une couleur"
-                compulsorychoice.style = "visibility : visible"
+                choiceRequired.innerText = "Veuillez choisir une couleur"
+                choiceRequired.style = "visibility : visible"
             }else {
-                const compulsorychoice = document.getElementById("choiceMessage");
-                compulsorychoice.classList.add("textGreen");
-                compulsorychoice.classList.remove("textRed");
-                compulsorychoice.innerText = "Article ajoué au panier"
-                compulsorychoice.style = "visibility : visible";
+                const choiceRequired = document.getElementById("choiceMessage");
+                choiceRequired.classList.add("textGreen");
+                choiceRequired.classList.remove("textRed");
+                choiceRequired.innerText = "Article ajoué au panier"
+                choiceRequired.style = "visibility : visible";
                 saveProductInCart(JSON.parse(localStorage.getItem('currentProduct')));
-                /* Appel de la fonction qui affich et met à jour le nombre d'article dans le panier */
+                /* Appel de la fonction qui affiche et met à jour le nombre d'article dans le panier */
                 displayQuantityInCart();
             }
         });
