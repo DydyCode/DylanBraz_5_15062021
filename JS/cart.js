@@ -215,7 +215,7 @@ function sendData() {
 /***** Les REGEX *****/
 
    let nameLastNameCityValidation = /^[A-Za-z]{3,20}$/;
-   let adressValidation = /^([0-9a-z'àâéèêôùûçÀÂÉÈÔÙÛÇ\s-]{1,50})$/;
+   let adressValidation = /^([0-9a-z'àâéèêôùûçÀÂÉÈÔÙÛÇ \s-]{1,50})$/;
    let postalValidation = /^\d{5}$/;
    let mailValidation = /^[a-zA-Z0-9.-_]+[@]{1}[a-z-A-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
    
