@@ -227,7 +227,7 @@ function isTextInputValid(input, regex, message) {
 console.log(messageElement);
      /* Test si l'utilisateur a rempli l'input */
      if (inputElement.value == '') {
-            messageElement.innerText =  message + "manquant";
+            messageElement.innerText =  message + " manquant";
             messageElement.style.color = "red";
 
             return false;
