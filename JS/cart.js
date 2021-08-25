@@ -154,125 +154,6 @@ totalDiv.innerText = "Total à payer : " + totalOder + "€";
 
 /********************************* Le formulaire ********************************* /
 
-/***** Les REGEX *****/
-
-let nameLastNameCityValidation = /^[A-Za-z]{3,20}$/;
-let adressValidation = /^([0-9a-z'àâéèêôùûçÀÂÉÈÔÙÛÇ\s-]{1,50})$/;
-let postalValidation = /^\d{5}$/;
-let mailValidation = /^[a-zA-Z0-9.-_]+[@]{1}[a-z-A-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
-
-
-// // /***** Fonction qui test l'input du prénom ******/
-// function firstNameIsValid() {
-//     /* Pointage des éléments sur le DOM */
-//     let firstName = document.getElementById('firstName');
-//     let firstNameMissing = document.getElementById('firstNameMissing');
-//     let error = false;
-
-//     /* Test si l'utilisateur a rempli l'input */
-//     if (firstName.validity.valueMissing) {
-//         firstNameMissing.textContent = "Prénom manquant";
-//         firstNameMissing.style.color = "red";
-
-//         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-//     } else if (nameLastNameCityValidation.test(firstName.value) == false) {
-//         firstNameMissing.textContent = "Format incorrect, merci de ne pas dépasser 20 caractères";
-//         firstNameMissing.style.color = "red";
-//     } else {
-//         error = true;
-//     }
-//     return error;
-// }
-
-// /***** Fonction qui test l'input du nom *****/
-// function lastNameIsValid() {
-//     /* Pointage des éléments sur le DOM */
-//     let lastNameUser = document.getElementById('lastName');
-//     let lastNameMissing = document.getElementById('lastNameMissing');
-//     let error = false;
-
-//     /* Test si l'utilisateur a rempli l'input */
-//     if (lastNameUser.validity.valueMissing) {
-//         lastNameMissing.textContent = "Nom manquant";
-//         lastNameMissing.style.color = "red";
-
-//         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-//     } else if (nameLastNameCityValidation.test(lastNameUser.value) == false) {
-//         lastNameMissing.textContent = "Format incorrect, merci de ne pas dépasser 20 caractères";
-//         lastNameMissing.style.color = "red";
-//     }else {
-//         error = true;
-//     }
-//     return error;
-// }
-
-// // /***** Fonction qui test l'input de l'adresse *****/
-// function adressIsValid() {
-//     /* Pointage des éléments sur le DOM */
-//     let adress = document.getElementById('adress');
-//     let adressMissing = document.getElementById('adressMissing');
-//     let error = false;
-
-//     /* Test si l'utilisateur a rempli l'input */
-//     if (adress.validity.valueMissing) {
-//         adressMissing.textContent = "Adresse manquante";
-//         adressMissing.style.color = "red";
-
-//     } else if (adressValidation.test(adress.value) == false) {
-//         adressMissing.textContent = "Format Incorrect";
-//         adressMissing.style.color = "red";
-//     } else {
-//         error = true;
-//     }
-//     return error;
-// }
-
-// // /***** Fonction qui test l'input code postal *****/
-// function postalIsValid() {
-//     /* Pointage des éléments sur le DOM */
-//     let postal = document.getElementById('postal');
-//     let postalMissing = document.getElementById('postalMissing');
-//     let error = false;
-
-//     /* Test si l'utilisateur a rempli l'input */
-//     if (postal.validity.valueMissing) {
-//         postalMissing.textContent = "Code postal manquant";
-//         postalMissing.style.color = "red";
-
-//         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-//     } else if (postalValidation.test(postal.value) == false) {
-//         postalMissing.textContent = "Format incorrect";
-//         postalMissing.style.color = "red";
-//     }else {
-//         error = true;
-//     }
-//     return error;
-// }
-
-// // /***** Fonction qui test l'input adresse mail *****/
-// function mailIsValid() {
-//     /* Pointage des éléments sur le DOM */
-//     let mail        = document.getElementById('mail');
-//     let mailMissing = document.getElementById('mailMissing');
-//     let error       = false;
-
-//     /* Test si l'utilisateur a rempli l'input */
-//     if (mail.validity.valueMissing) {
-//         mailMissing.textContent = "Adresse mail manquante";
-//         mailMissing.style.color = "red";
-    
-
-//         /* Test si ce qu'a rempli l'utilisateur respect les REGEX */
-//     } else if (mailValidation.test(mail.value) == false) {
-//         mailMissing.textContent = "Format incorrect, Veuillez saisir une adresse email valide";
-//         mailMissing.style.color = "red";
-//     }else {
-//         error = true;
-//     }
-
-//     return error;
-// }
-
 /***** Envoi des données à l'API *****/
 function sendData() {
     /***** Récupération des donées du formulaire *****/
@@ -330,6 +211,14 @@ function sendData() {
         })
 
 }
+
+/***** Les REGEX *****/
+
+   let nameLastNameCityValidation = /^[A-Za-z]{3,20}$/;
+   let adressValidation = /^([0-9a-z'àâéèêôùûçÀÂÉÈÔÙÛÇ\s-]{1,50})$/;
+   let postalValidation = /^\d{5}$/;
+   let mailValidation = /^[a-zA-Z0-9.-_]+[@]{1}[a-z-A-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+   
 /***** Fonction qui test le contenu des input *****/
 function isTextInputValid(input, regex, message) {
     let inputElement   = document.getElementById(input);
@@ -354,11 +243,6 @@ console.log(messageElement);
      }
 }
 /***** Fonction qui vérifie le formulaire *****/
-// function validForm(e) {
-//     e.preventDefault();
-    
-//     return firstNameIsValid() && lastNameIsValid() && adressIsValid() && postalIsValid() && mailIsValid();
-// }
 function validForm(e) {
     e.preventDefault();
 
