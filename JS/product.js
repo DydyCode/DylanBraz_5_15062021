@@ -78,7 +78,6 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                 const choiceRequired = document.getElementById("choiceMessage");
                 choiceRequired.classList.add("textRed"); 
                 choiceRequired.classList.remove("textGreen");
-                /*modifier le nom de compulsory */
                 choiceRequired.innerText = "Veuillez choisir une couleur"
                 choiceRequired.style = "visibility : visible"
             }else {
