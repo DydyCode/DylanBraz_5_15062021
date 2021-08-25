@@ -239,6 +239,7 @@ console.log(messageElement);
 
             return false;
      } else {
+         messageElement.innerText = "";
          return true
      }
 }
