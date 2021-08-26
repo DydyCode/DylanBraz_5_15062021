@@ -223,8 +223,7 @@ function sendData() {
 function isTextInputValid(input, regex, message) {
     let inputElement   = document.getElementById(input);
     let messageElement = inputElement.nextElementSibling;
-    console.log(inputElement);
-console.log(messageElement);
+    
      /* Test si l'utilisateur a rempli l'input */
      if (inputElement.value == '') {
             messageElement.innerText =  message + " manquant";
