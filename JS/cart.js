@@ -4,10 +4,10 @@ const containerForm = document.getElementById("containerForm");
 const clearCartBtn = document.getElementById("clearCartBtn");
 
 /****************** Récupération des produits dans le local storage ****************/
-let productsInCart = JSON.parse(localStorage.getItem("cart"));
+let productsInCart = getCart();
 
 /***** Test si le panier est vide *****/
-if (productsInCart === null) {
+if (productsInCart.length === 0) {
     container.innerHTML = `
     <div id="containerCartEmpty">
         <h2>
@@ -130,7 +130,7 @@ function createDiv(productsInCart) {
 /*****  Boutton qui vide le panier *****/
 clearCartBtn.addEventListener("click", () => {
     localStorage.clear();
-    window.location.href = "cart.html";
+    window.location.reload();
 });
 
 /**************************** Le montant total du panier ****************************/
@@ -196,20 +196,19 @@ function sendData() {
         },
         body: data
     })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then(info => {
-            localStorage.setItem('info', JSON.stringify(info));
-            window.location.href = `confirmedOrder.html?orderId=${info.orderId}`
-        })
+    .then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+    })
+    .then(info => {
+        localStorage.setItem('info', JSON.stringify(info));
+        window.location.href = `confirmedOrder.html?orderId=${info.orderId}`
+    })
 
-        .catch(function (err) {
-            console.log(err);;
-        })
-
+    .catch(function (err) {
+        console.log(err);
+    });
 }
 
 /***** Les REGEX *****/
