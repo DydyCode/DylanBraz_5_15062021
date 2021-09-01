@@ -24,32 +24,8 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
         /* Ajout du produit dans le localStorage */
         localStorage.setItem('currentProduct', JSON.stringify(product));
 
-        productpage.innerHTML =
-            `
-                <img class="imageProduct" src="${product.imageUrl}" width="700">
-                <div class="product">
-                    <h2>
-                        ${product.name}
-                    </h2>
-                        <p>
-                            ${(product.price / 100).toFixed(2)}€
-                        </p>
-                        <p class="descriptionProduct">
-                            ${product.description}
-                        </p>
-                    <form>
-                        <select id="colorsChoices">
-                        </select action="cart.html">
-                    </form>
-                        <p id="choiceMessage"></p>
-                        <button id="addToCartButton">
-                            Ajouter au panier
-                        </button>
-                </div>
-            `
-
-        /* Appel de la fonction qui crée une option "choisissez une couleur et la séléctionne" */
-        addBaseChoice();
+        productpage.appendChild(createImg(product));
+        productpage.appendChild(createDiv(product));
 
         /* Ajout des couleurs dans le select */
         product.colors.forEach(option => {
@@ -103,14 +79,58 @@ function saveProductInCart(product) {
     cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
 }
-/* Fonction qui crée une option "choisissez une couleur et la séléctionne" */
-function addBaseChoice() {
-    let baseChoice = document.createElement("option");
+
+/***** Fonction qui crée des balises HTML *****/
+
+function createImg (product) {
+    const img = document.createElement('img');
+    img.classList.add('imageProduct');
+    img.setAttribute("width", "700");
+    img.setAttribute('src', product.imageUrl);
+
+    return img
+}
+
+function createDiv (product) {
+    const containerProduct = document.createElement('div');
+    containerProduct.classList.add("imageProduct");
+    
+    const  nameProduct = document.createElement('h2');
+    nameProduct.innerHTML = product.name;
+
+    const priceProduct = document.createElement('p');
+    priceProduct.innerHTML = (product.price /100).toFixed(2) + "€";
+
+    const descriptionProduct = document.createElement('p');
+    descriptionProduct.classList.add('descriptionProduct');
+    descriptionProduct.innerHTML = product.description;
+
+    const form = document.createElement('form');
+    const select = document.createElement('select');
+    select.setAttribute('id', "colorsChoices");
+    select.setAttribute('action', 'cart.html');
+
+    const baseChoice = document.createElement('option');
     baseChoice.setAttribute("selected", "selected");
     baseChoice.setAttribute("id", "baseChoice");
     baseChoice.value = "";
     baseChoice.textContent = "Choissisez une couleur";
 
-    document.getElementById('colorsChoices').appendChild(baseChoice);
-    return baseChoice;
+    const choiceMessage = document.createElement('p');
+    choiceMessage.setAttribute('id', 'choiceMessage');
+
+    const btn = document.createElement('button');
+    btn.setAttribute('id', 'addToCartButton');
+    btn.innerHTML = "Ajouter au panier";
+
+    containerProduct.appendChild(nameProduct);
+    containerProduct.appendChild(priceProduct);
+    containerProduct.appendChild(descriptionProduct);
+    select.appendChild(baseChoice);
+    form.appendChild(select);
+    containerProduct.appendChild(form);
+    containerProduct.appendChild(choiceMessage);
+    containerProduct.appendChild(btn);
+
+    return containerProduct;
 }
