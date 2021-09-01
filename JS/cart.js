@@ -3,6 +3,7 @@ const container = document.getElementById("containerCart");
 const containerForm = document.getElementById("containerForm");
 const clearCartBtn = document.getElementById("clearCartBtn");
 
+
 /****************** Récupération des produits dans le local storage ****************/
 let productsInCart = getCart();
 
@@ -15,38 +16,13 @@ if (productsInCart.length === 0) {
         </h2>
     </div>
     `
+    document.getElementById('form').style = "display: none"
     clearCartBtn.style = "display: none"
 } else {
     /***** Si le panier n'est pas vide *****/
     for (let i = 0; i < productsInCart.length; i++) {
         createDiv(productsInCart[i]);
     }
-    containerForm.innerHTML =
-        `
-    <form method="post">
-        <label for="firstName" > Entrez votre Prénom :</label>
-        <input type="text" name="firstName" id="firstName" required="required" maxlength="20">
-        <span id="firstNameMissing"></span>
-
-        <label for="name" > Entrez votre Nom :</label>
-        <input type="text" name="lastName" id="lastName" required="required" maxlength="20">
-        <span id="lastNameMissing"></span>
-
-        <label for="tel" > Entrez votre adresse :</label>
-        <input type="adress" name="adress" id="adress" required="required">
-        <span id="adressMissing"></span>
-        
-        <label for="postal" > Entrez votre code postal :</label>
-        <input type="postal" name="postal" id="postal" required="required">
-        <span id="postalMissing"></span>
-
-        <label for="email" > Entrez votre adresse mail :</label>
-        <input type="email" name="mail" id="mail" required="required">
-        <span id="mailMissing"></span>
-
-        <input  value="Valider ma commande" id="validateOrderBtn">
-    </form>
-    `
 }
 
 /***** Fonction qui crée une balise image *****/
