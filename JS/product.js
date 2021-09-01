@@ -7,16 +7,16 @@ const teddy_id = urlParams.get('id');
 
 /***** Appel de l'api *****/
 fetch('http://localhost:3000/api/teddies/' + teddy_id)
-    .then(function (product) {
+    .then((product) => {
         if (product.ok) {
             return product.json();
         }
     })
     /* Redirection vers la page d'érreur */
-    .catch (function() {
-        window.location.href="error.html";
+    .catch(() => {
+        window.location.href = "error.html";
     })
-    .then(function (product) {
+    .then((product) => {
 
         /* Appel de la fonction qui affiche et met à jour le nombre d'article dans le panier */
         displayQuantityInCart();
@@ -48,23 +48,11 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
                 </div>
             `
 
-        /* Fonction qui crée une option "choisissez une couleur et la séléctionne" */
-        function addBaseChoice() {
-            let baseChoice = document.createElement("option");
-            baseChoice.setAttribute("selected", "selected");
-            baseChoice.setAttribute("id", "baseChoice");
-            baseChoice.value = "";
-            baseChoice.textContent = "Choissisez une couleur";
-            
-            document.getElementById('colorsChoices').appendChild(baseChoice);
-            return baseChoice;
-        }
-
         /* Appel de la fonction qui crée une option "choisissez une couleur et la séléctionne" */
         addBaseChoice();
 
         /* Ajout des couleurs dans le select */
-            product.colors.forEach(option => {
+        product.colors.forEach(option => {
             newchoice = addOptionToSelect(option);
             document.getElementById('colorsChoices').appendChild(newchoice);
         });
@@ -76,11 +64,11 @@ fetch('http://localhost:3000/api/teddies/' + teddy_id)
         btnAddToCart.addEventListener("click", () => {
             if (document.getElementById('colorsChoices').value === "") {
                 const choiceRequired = document.getElementById("choiceMessage");
-                choiceRequired.classList.add("textRed"); 
+                choiceRequired.classList.add("textRed");
                 choiceRequired.classList.remove("textGreen");
                 choiceRequired.innerText = "Veuillez choisir une couleur"
                 choiceRequired.style = "visibility : visible"
-            }else {
+            } else {
                 const choiceRequired = document.getElementById("choiceMessage");
                 choiceRequired.classList.add("textGreen");
                 choiceRequired.classList.remove("textRed");
@@ -109,11 +97,20 @@ function addOptionToSelect(opt) {
 function saveProductInCart(product) {
     let selectedColor = document.getElementById('colorsChoices').value;
     product.selectedColor = selectedColor;
-  
-    let stringifiedCart = localStorage.getItem("cart");
 
     /* Ternaire qui test si le panier est null */
-    let cart = stringifiedCart === null ? [] : JSON.parse(stringifiedCart);
+    let cart = getCart();
     cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
+}
+/* Fonction qui crée une option "choisissez une couleur et la séléctionne" */
+function addBaseChoice() {
+    let baseChoice = document.createElement("option");
+    baseChoice.setAttribute("selected", "selected");
+    baseChoice.setAttribute("id", "baseChoice");
+    baseChoice.value = "";
+    baseChoice.textContent = "Choissisez une couleur";
+
+    document.getElementById('colorsChoices').appendChild(baseChoice);
+    return baseChoice;
 }

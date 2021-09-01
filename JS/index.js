@@ -3,12 +3,14 @@ const NumberArticles = document.getElementById("NumberArticles");
 
 /***** Le fetch *****/
 fetch('http://localhost:3000/api/teddies') 
-.then (function(res) {
-	if (res) {
+.then (res => {
+	if (res.ok) {
 		return res.json();
 	}
+
+	throw Error;
 })
-.then (function (arrayAllProducts) {
+.then (arrayAllProducts => {
 	/* Appel de la fonction qui met à jour la quantité du panier */
 	displayQuantityInCart();
 
@@ -16,9 +18,8 @@ fetch('http://localhost:3000/api/teddies')
 	insertNewProduct(arrayAllProducts);
 
 })
-
 /***** catch qui permet de renvoyer vers la page d'erreur *****/
-.catch (function() {
+.catch ( (e) => {
 	window.location.href="error.html";
 })
 
@@ -46,7 +47,7 @@ function insertNewProduct(array) {
 
 		/* Ajout du produit dans le DOM */
 		document.getElementById('homepage').appendChild(newDivProduct);
-	})
+	});
 };
 
 /***** Fonction qui ajoute une balise a *****/
