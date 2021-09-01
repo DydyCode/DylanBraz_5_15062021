@@ -31,4 +31,10 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+
+@media (max-width: 414px) {
+  .containerProduct img {
+    width: 250px;
+  }
+}
 /*# sourceMappingURL=index.css.map */

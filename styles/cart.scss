@@ -82,7 +82,11 @@
             text-align: center;
         }
 }
-    
+@media (max-width: 540px) {
+    #containerCart img {
+        width: 92px;
+    }
+}
     
    
 

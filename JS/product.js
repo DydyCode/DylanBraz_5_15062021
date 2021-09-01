@@ -93,7 +93,7 @@ function createImg (product) {
 
 function createDiv (product) {
     const containerProduct = document.createElement('div');
-    containerProduct.classList.add("imageProduct");
+    containerProduct.classList.add("product");
     
     const  nameProduct = document.createElement('h2');
     nameProduct.innerHTML = product.name;

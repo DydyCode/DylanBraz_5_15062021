@@ -1,5 +1,10 @@
 @import "utils.scss";
 
+@media (max-width: 540px) {
+    p {
+        font-size: 15px!important;
+    }
+}
 /***** Header *****/
 nav {
     background-color: $color1;

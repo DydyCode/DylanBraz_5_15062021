@@ -46,4 +46,13 @@
   padding-bottom: 1rem;
   width: 400px;
 }
+
+@media (max-width: 540px) {
+  .imageProduct {
+    width: 400px;
+  }
+  #productpage .descriptionProduct {
+    width: 340px;
+  }
+}
 /*# sourceMappingURL=product.css.map */

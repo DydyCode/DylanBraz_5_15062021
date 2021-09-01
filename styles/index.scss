@@ -27,4 +27,9 @@
     padding-bottom : 1rem;
 }
 
+@media (max-width: 414px) {
+    .containerProduct img {
+        width: 250px;
+    }
+}
 
