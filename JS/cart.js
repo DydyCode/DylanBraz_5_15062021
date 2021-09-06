@@ -21,6 +21,7 @@ if (productsInCart.length === 0) {
 } else {
     /***** Si le panier n'est pas vide *****/
     for (let i = 0; i < productsInCart.length; i++) {
+        /* Création du div pour chaque produit */
         createDiv(productsInCart[i]);
     }
 }
